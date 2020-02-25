@@ -27,15 +27,14 @@ public class CombatController : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
-
         }
     }
 
     public void Initialize()
     {
+        Debug.Log("Initializing");
         state = State.Initializing;
-        CombatUIController.Instance.TransitionOut();
-        CombatSceneController.Instance.ArrangeScene();
+        CombatUIController.Instance.TransitionInStart();
+        //CombatSceneController.Instance.ArrangeScene();
     }
 }

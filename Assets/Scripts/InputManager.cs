@@ -19,12 +19,24 @@ public class InputManager : MonoBehaviour
         {
             SwitchWorlds();
         }
+
+        //TODO Testing for Combat Setup
+        if (Input.GetButtonDown("Submit"))
+        {
+            EnterCombat();
+        }
     }
 
     //TODO add conditions for when playerMovementInput gets set
     public static Vector3 ProcessInput ()
     {
         return new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+    }
+
+    //Test
+    private void EnterCombat()
+    {
+        CombatController.Instance.Initialize();
     }
 
     private void SwitchWorlds ()

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatUIController : MonoBehaviour
+public class OverworldUIController : MonoBehaviour
 {
-    public static CombatUIController Instance { get; set; }
-    private Animator anim;
+    public static OverworldUIController Instance { get; set; }
+    private Animator animator;
 
     void Awake()
     {
@@ -22,11 +22,11 @@ public class CombatUIController : MonoBehaviour
 
     private void Start()
     {
-        anim = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
     }
 
-    public void TransitionInStart()
+    public void TransitionOut()
     {
-        anim.Play("TransitionInStart");
+        animator.Play("TransitionOut");
     }
 }
