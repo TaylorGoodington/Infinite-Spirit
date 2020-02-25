@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatUIController : MonoBehaviour
+public class CombatSceneController : MonoBehaviour
 {
-    public static CombatUIController Instance { get; set; }
+    public static CombatSceneController Instance { get; set; }
 
     void Awake()
     {
@@ -21,7 +21,7 @@ public class CombatUIController : MonoBehaviour
     }
 
     //TODO - Write
-    public void TransitionOut()
+    public void ArrangeScene()
     {
 
     }

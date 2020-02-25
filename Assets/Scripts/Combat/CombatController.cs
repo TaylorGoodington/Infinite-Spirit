@@ -36,5 +36,6 @@ public class CombatController : MonoBehaviour
     {
         state = State.Initializing;
         CombatUIController.Instance.TransitionOut();
+        CombatSceneController.Instance.ArrangeScene();
     }
 }
