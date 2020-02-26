@@ -5,9 +5,10 @@ using UnityEngine;
 public class CombatController : MonoBehaviour
 {
     public static CombatController Instance { get; set; }
-    State state;
+    CombatState state;
+    CombatScenario scenario;
 
-    enum State
+    public enum CombatState
     {
         Initializing = 0,
         Ready = 1,
@@ -15,6 +16,12 @@ public class CombatController : MonoBehaviour
         Dialogue = 3,
         Cutscene = 4,
         Closing = 5
+    }
+
+    public enum CombatScenario
+    {
+        Normal = 0,
+        Boss = 1
     }
 
     void Awake()
@@ -30,11 +37,21 @@ public class CombatController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (state == CombatState.Initializing)
+        {
+
+        }
+    }
+
     public void Initialize()
     {
         Debug.Log("Initializing");
-        state = State.Initializing;
+        state = CombatState.Initializing;
         CombatUIController.Instance.TransitionInStart();
+        MusicManager.Instance.StartCombatMusic(scenario, MasterControl.Instance.playerLocation);
+
         //CombatSceneController.Instance.ArrangeScene();
     }
 }

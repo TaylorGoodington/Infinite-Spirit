@@ -1,64 +1,72 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 public class MusicManager : MonoBehaviour
 {
-    public AudioClip[] tracks;
+    public static MusicManager Instance { get; set; }
+	private AudioSource player;
+    public List<TrackInformation> overWorldTracks;
+    public List<TrackInformation> normalCombatTracks;
+    public List<TrackInformation> bossCombatTracks;
 
-    private static MusicManager instance;
-    private static AudioClip[] staticTracks;
-	private static AudioSource player;
-	
-	void Start ()
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+    
+    void Start ()
     {
 		player = GetComponent<AudioSource>();
-        instance = GetComponent<MusicManager>();
-        staticTracks = tracks;
-
-        //TODO Set start music volume from player prefs.
     }
 	
-	public static void PlayMusic (int track, bool loop)
+	public void PlayMusic (AudioClip clip, bool loop)
     {
-		AudioClip thisLevelMusic = staticTracks[track];
-		if (thisLevelMusic)
+        player.clip = clip;
+
+        if (loop)
         {
-			player.clip = thisLevelMusic;
+            player.loop = true;
+        }
+        else
+        {
+            player.loop = false;
+        }
 
-            if (loop)
-            {
-                player.loop = true;
-            } 
-            else
-            {
-                player.loop = false;
-            }
-            player.Play();
-		}
-	}
-
-    public static void CallFadeMusicIn ()
-    {
-        instance.StartCoroutine(FadeMusicIn());
+        player.Play();
     }
 
-    private static IEnumerator FadeMusicIn ()
-    {
-        //float targetVolume = PlayerPrefsManager.GetMasterMusicVolume();
-        //float fadeTime = .5f;
+    //public void CallFadeMusicIn ()
+    //{
+    //    Instance.StartCoroutine(FadeMusicIn());
+    //}
 
-        //while (player.volume < targetVolume)
-        //{
-        //    player.volume += (targetVolume / fadeTime) * Time.deltaTime;
+    private IEnumerator FadeMusicIn ()
+    {
+        float targetVolume = PlayerPrefsManager.Instance.GetMasterMusicVolume();
+        float fadeTime = .5f;
+
+        while (player.volume < targetVolume)
+        {
+            player.volume += (targetVolume / fadeTime) * Time.deltaTime;
             yield return null;
-        //}
+        }
     }
 
-    public static void CallFadeMusicOut()
-    {
-        instance.StartCoroutine(FadeMusicOut());
-    }
+    //public void CallFadeMusicOut()
+    //{
+    //    Instance.StartCoroutine(FadeMusicOut());
+    //}
 
-    private static IEnumerator FadeMusicOut()
+    private IEnumerator FadeMusicOut()
     {
         float initialVolume = player.volume;
         float fadeTime = .75f;
@@ -69,44 +77,38 @@ public class MusicManager : MonoBehaviour
             yield return null;
         }
     }
-
-    //public static void FadeMusicIn ()
-    //{
-    //    float currentVolume = PlayerPrefsManager.GetMasterMusicVolume();
-    //    float fadeTime = .5f;
-    //    bool fadeIn = true;
-
-    //    if (fadeIn)
-    //    {
-    //        player.volume += (currentVolume / fadeTime) * Time.deltaTime;
-    //    }
-
-    //    if (player.volume >= currentVolume)
-    //    {
-    //        player.volume = currentVolume;
-    //        fadeIn = false;
-    //    }
-    //}
-
-    //public static void FadeMusicOut()
-    //{
-    //    float currentVolume = PlayerPrefsManager.GetMasterMusicVolume();
-    //    float fadeOutTime = .75f;
-    //    bool fadeOut = true;
-
-    //    if (fadeOut)
-    //    {
-    //        player.volume -= (currentVolume / fadeOutTime) * Time.deltaTime;
-    //    }
-
-    //    if (player.volume <= 0)
-    //    {
-    //        fadeOut = false;
-    //    }
-    //}
 	
-	public static void ChangeVolume (float volume)
+	public void ChangeVolume (float volume)
     {
 		player.volume = volume;
 	}
+
+    public void StartCombatMusic(CombatController.CombatScenario scenario, MasterControl.Location location)
+    {
+        PlayMusic(DetermineCombatTrack(scenario, location), true);
+        StartCoroutine(FadeMusicIn());
+    }
+
+    private AudioClip DetermineCombatTrack(CombatController.CombatScenario scenario, MasterControl.Location location)
+    {
+        TrackInformation track = new TrackInformation();
+
+        if (scenario == CombatController.CombatScenario.Normal)
+        {
+            track = normalCombatTracks.Find(info => info.location == location);
+        }
+        else if (scenario == CombatController.CombatScenario.Boss)
+        {
+            track = bossCombatTracks.Find(info => info.location == location);
+        }
+        
+        return track.clip;
+    }
+}
+
+[Serializable]
+public struct TrackInformation
+{
+    public MasterControl.Location location;
+    public AudioClip clip;
 }

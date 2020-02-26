@@ -7,6 +7,13 @@ public class MasterControl : MonoBehaviour
     public bool doesPlayerHaveControl;
     public bool isInCombat;
     public bool isInDigitalWorld;
+    public Location playerLocation;
+
+    public enum Location
+    {
+        Hub_Town = 0,
+        Fields = 1
+    }
 
     private void Awake()
     {
@@ -24,9 +31,13 @@ public class MasterControl : MonoBehaviour
 
     private void Start()
     {
+        #region Testing
         doesPlayerHaveControl = false;
         isInCombat = false;
         isInDigitalWorld = false;
+        playerLocation = Location.Hub_Town;
+        #endregion
+
     }
 
 }

@@ -2,15 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerPrefsManager : MonoBehaviour {
+public class PlayerPrefsManager : MonoBehaviour 
+{
+    public static PlayerPrefsManager Instance { get; set; }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
+    //TODO Actually write this...
+    public float GetMasterMusicVolume()
+    {
+        return 0.75f;
+    }
+
 }
