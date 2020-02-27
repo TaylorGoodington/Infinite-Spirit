@@ -6,8 +6,7 @@ using UnityEngine;
 public class CombatSceneController : MonoBehaviour
 {
     public static CombatSceneController Instance { get; set; }
-    public CombatSet[] normalSets;
-    public CombatSet[] bossSets;
+    private CombatSetDatabase combatSetDatabase;
 
     void Awake()
     {
@@ -24,31 +23,20 @@ public class CombatSceneController : MonoBehaviour
 
     void Start()
     {
-
+        combatSetDatabase = GetComponentInChildren<CombatSetDatabase>();
     }
 
     //TODO - Write
-    public void ArrangeScene()
+    public void ArrangeScene(CombatController.CombatScenario scenario, MasterControl.Location location)
     {
-        byte setId = DetermineSet();
+        GameObject targetSet = combatSetDatabase.DetermineSet(scenario, location);
+        //grab enemy models
+        //place enemies on set based on number of enemies and positioning requirements if necessary.
+        //grabs ally models
+        //places ally models
+        //grabs player model
+        //places player model
     }
 
-    private byte DetermineSet()
-    {
-        byte setId = 0;
-
-        if (MasterControl.Instance.playerLocation == MasterControl.Location.Fields)
-        {
-            setId = (int)MasterControl.Location.Hub_Town;
-        }
-
-        return setId;
-    }
-}
-
-[Serializable]
-public struct CombatSet
-{
-    public MasterControl.Location location;
-    public GameObject setObject;
+    
 }
