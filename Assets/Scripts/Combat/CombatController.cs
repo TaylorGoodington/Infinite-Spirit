@@ -1,28 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Utilitiy;
 
 public class CombatController : MonoBehaviour
 {
     public static CombatController Instance { get; set; }
     CombatState state;
-    CombatScenario scenario;
-
-    public enum CombatState
-    {
-        Initializing = 0,
-        Ready = 1,
-        Processing = 2,
-        Dialogue = 3,
-        Cutscene = 4,
-        Closing = 5
-    }
-
-    public enum CombatScenario
-    {
-        Normal = 0,
-        Boss = 1
-    }
+    CombatScenario combatScenario;
 
     void Awake()
     {
@@ -41,7 +26,7 @@ public class CombatController : MonoBehaviour
     {
         if (state == CombatState.Initializing)
         {
-
+            //Nada
         }
     }
 
@@ -50,8 +35,6 @@ public class CombatController : MonoBehaviour
         Debug.Log("Initializing");
         state = CombatState.Initializing;
         CombatUIController.Instance.TransitionInStart();
-        MusicManager.Instance.StartCombatMusic(scenario, MasterControl.Instance.playerLocation);
-
-        //CombatSceneController.Instance.ArrangeScene();
+        CombatSceneController.Instance.ArrangeScene(combatScenario, MasterControl.Instance.playerLocation);
     }
 }

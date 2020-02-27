@@ -1,32 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static Utilitiy;
 
 public class CombatSetDatabase : MonoBehaviour
 {
-    public List<CombatSet> normalSets;
-    public List<CombatSet> bossSets;
+    public List<CombatSet> combatSets;
 
-    public GameObject DetermineSet(CombatController.CombatScenario scenario, MasterControl.Location location)
+    public CombatSet DetermineSet(CombatScenario scenario, Location location)
     {
         CombatSet set = new CombatSet();
 
-        if (scenario == CombatController.CombatScenario.Normal)
-        {
-            set = normalSets.Find(normalSet => normalSet.location == location);
-        }
-        else if (scenario == CombatController.CombatScenario.Boss)
-        {
-            set = bossSets.Find(normalSet => normalSet.location == location);
-        }
+        set = combatSets.Find(x => x.location == location && x.scenario == scenario);
 
-        return set.setObject;
+        return set;
     }
 }
 
 [Serializable]
 public struct CombatSet
 {
-    public MasterControl.Location location;
+    public Location location;
+    public CombatScenario scenario;
     public GameObject setObject;
+    public AudioClip music;
 }

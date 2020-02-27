@@ -2,13 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Utilitiy;
+
 public class MusicManager : MonoBehaviour
 {
     public static MusicManager Instance { get; set; }
 	private AudioSource player;
-    public List<TrackInformation> overWorldTracks;
-    public List<TrackInformation> normalCombatTracks;
-    public List<TrackInformation> bossCombatTracks;
+    //public List<TrackInformation> overWorldTracks;
+    //public List<TrackInformation> combatTracks;
 
     void Awake()
     {
@@ -44,11 +45,6 @@ public class MusicManager : MonoBehaviour
         player.Play();
     }
 
-    //public void CallFadeMusicIn ()
-    //{
-    //    Instance.StartCoroutine(FadeMusicIn());
-    //}
-
     private IEnumerator FadeMusicIn ()
     {
         float targetVolume = PlayerPrefsManager.Instance.GetMasterMusicVolume();
@@ -60,11 +56,6 @@ public class MusicManager : MonoBehaviour
             yield return null;
         }
     }
-
-    //public void CallFadeMusicOut()
-    //{
-    //    Instance.StartCoroutine(FadeMusicOut());
-    //}
 
     private IEnumerator FadeMusicOut()
     {
@@ -83,32 +74,17 @@ public class MusicManager : MonoBehaviour
 		player.volume = volume;
 	}
 
-    public void StartCombatMusic(CombatController.CombatScenario scenario, MasterControl.Location location)
+    public void StartCombatMusic(AudioClip audioClip)
     {
-        PlayMusic(DetermineCombatTrack(scenario, location), true);
+        PlayMusic(audioClip, true);
         StartCoroutine(FadeMusicIn());
     }
-
-    private AudioClip DetermineCombatTrack(CombatController.CombatScenario scenario, MasterControl.Location location)
-    {
-        TrackInformation track = new TrackInformation();
-
-        if (scenario == CombatController.CombatScenario.Normal)
-        {
-            track = normalCombatTracks.Find(info => info.location == location);
-        }
-        else if (scenario == CombatController.CombatScenario.Boss)
-        {
-            track = bossCombatTracks.Find(info => info.location == location);
-        }
-        
-        return track.clip;
-    }
 }
 
-[Serializable]
-public struct TrackInformation
-{
-    public MasterControl.Location location;
-    public AudioClip clip;
-}
+//[Serializable]
+//public struct TrackInformation
+//{
+//    public Location location;
+//    public TrackScenario scenario;
+//    public AudioClip clip;
+//}

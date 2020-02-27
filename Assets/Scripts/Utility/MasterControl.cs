@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static Utilitiy;
 
 public class MasterControl : MonoBehaviour
 {
@@ -8,12 +9,6 @@ public class MasterControl : MonoBehaviour
     public bool isInCombat;
     public bool isInDigitalWorld;
     public Location playerLocation;
-
-    public enum Location
-    {
-        Hub_Town = 0,
-        Fields = 1
-    }
 
     private void Awake()
     {

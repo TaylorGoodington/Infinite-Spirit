@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Utilitiy;
 
 public class CombatSceneController : MonoBehaviour
 {
     public static CombatSceneController Instance { get; set; }
-    private CombatSetDatabase combatSetDatabase;
+    [SerializeField] private CombatSetDatabase combatSetDatabase;
 
     void Awake()
     {
@@ -21,15 +22,12 @@ public class CombatSceneController : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        combatSetDatabase = GetComponentInChildren<CombatSetDatabase>();
-    }
-
     //TODO - Write
-    public void ArrangeScene(CombatController.CombatScenario scenario, MasterControl.Location location)
+    public void ArrangeScene(CombatScenario scenario, Location location)
     {
-        GameObject targetSet = combatSetDatabase.DetermineSet(scenario, location);
+        CombatSet targetSet = combatSetDatabase.DetermineSet(scenario, location);
+        MusicManager.Instance.StartCombatMusic(targetSet.music);
+        List<EnemyModel> enemyModels = ModelController.Instance.DetermineEnemies(scenario, location);
         //grab enemy models
         //place enemies on set based on number of enemies and positioning requirements if necessary.
         //grabs ally models
@@ -37,6 +35,4 @@ public class CombatSceneController : MonoBehaviour
         //grabs player model
         //places player model
     }
-
-    
 }
