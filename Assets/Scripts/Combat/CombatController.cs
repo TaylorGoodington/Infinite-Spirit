@@ -22,6 +22,15 @@ public class CombatController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        #region Testing
+
+        combatScenario = CombatScenario.Worm_Example;
+
+        #endregion
+    }
+
     private void Update()
     {
         if (state == CombatState.Initializing)
