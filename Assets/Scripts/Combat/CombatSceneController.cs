@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Utilitiy;
+using static Utility;
 
 public class CombatSceneController : MonoBehaviour
 {
@@ -23,11 +23,20 @@ public class CombatSceneController : MonoBehaviour
     }
 
     //TODO - Write
-    public void ArrangeScene(CombatScenario scenario, Location location)
+    public void ArrangeScene(CombatScenarioName scenario, Location location)
     {
+        //Finds the set
         CombatSet targetSet = combatSetDatabase.DetermineSet(scenario, location);
+
+        //Starts the combat music
         MusicManager.Instance.StartCombatMusic(targetSet.music);
-        List<EnemyModel> enemyModels = ModelController.Instance.DetermineEnemies(scenario, location);
+
+        //Recieves the list of enemyIds
+        List<byte> enemyIds = CombatScenarioDatabase.Instance.IdentifyEnemysForCombatScenario(scenario);
+
+        //Recieves the list of enemy models
+        List<GameObject> enemyModels = ModelController.Instance.RetrieveEnemyCombatModels(enemyIds);
+
         //grab enemy models
         //place enemies on set based on number of enemies and positioning requirements if necessary.
         //grabs ally models

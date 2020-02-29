@@ -17,9 +17,3 @@ public class EnemyModelDatabase : MonoBehaviour
         
     }
 }
-
-[Serializable]
-public struct EnemyModel
-{
-
-}

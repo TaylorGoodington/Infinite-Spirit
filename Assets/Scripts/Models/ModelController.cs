@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Utilitiy;
+using static Utility;
 
 public class ModelController : MonoBehaviour
 {
@@ -23,12 +23,12 @@ public class ModelController : MonoBehaviour
         }
     }
 
-    public List<EnemyModel> DetermineEnemies (CombatScenario scenario, Location location)
+    public List<GameObject> RetrieveEnemyCombatModels(List<byte> ids)
     {
-        List<EnemyModel> enemies = new List<EnemyModel>();
+        List<GameObject> enemyModels = new List<GameObject>();
 
+        //gets the models from the enemy model database
 
-
-        return enemies;
+        return enemyModels;
     }
 }

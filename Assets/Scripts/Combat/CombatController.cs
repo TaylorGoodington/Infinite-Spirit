@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Utilitiy;
+using static Utility;
 
 public class CombatController : MonoBehaviour
 {
     public static CombatController Instance { get; set; }
     CombatState state;
-    CombatScenario combatScenario;
+    CombatScenarioName combatScenario;
 
     void Awake()
     {
@@ -26,7 +26,7 @@ public class CombatController : MonoBehaviour
     {
         #region Testing
 
-        combatScenario = CombatScenario.Worm_Example;
+        combatScenario = CombatScenarioName.Worm_Example;
 
         #endregion
     }

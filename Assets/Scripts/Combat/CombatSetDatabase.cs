@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static Utilitiy;
+using static Utility;
 
 public class CombatSetDatabase : MonoBehaviour
 {
     public List<CombatSet> combatSets;
 
-    public CombatSet DetermineSet(CombatScenario scenario, Location location)
+    public CombatSet DetermineSet(CombatScenarioName scenario, Location location)
     {
         CombatSet set = new CombatSet();
 
@@ -21,7 +21,7 @@ public class CombatSetDatabase : MonoBehaviour
 public struct CombatSet
 {
     public Location location;
-    public CombatScenario scenario;
+    public CombatScenarioName scenario;
     public GameObject setObject;
     public AudioClip music;
 }

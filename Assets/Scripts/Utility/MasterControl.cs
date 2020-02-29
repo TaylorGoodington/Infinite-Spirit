@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using static Utilitiy;
+using static Utility;
 
 public class MasterControl : MonoBehaviour
 {

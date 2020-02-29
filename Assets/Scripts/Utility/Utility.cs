@@ -1,4 +1,4 @@
-﻿public class Utilitiy
+﻿public class Utility
 {
     public enum Location
     {
@@ -19,7 +19,7 @@
     //Will be more specific and describe the enemy and number of enemies
     //For example, The first boss will have its own scenario that will inform the model controller what enemies need to be present.
     //Also an encounter in the digital world will have a scenario for each type of enemy and possible variations on number of enemies or compositions with supporting enemies.
-    public enum CombatScenario
+    public enum CombatScenarioName
     {
         Worm_Example = 0,
         Boss_Example = 1
