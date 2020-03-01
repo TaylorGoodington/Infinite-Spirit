@@ -7,6 +7,7 @@ public class EnemyModelDatabase : MonoBehaviour
 {
     public static EnemyModelDatabase Instance { get; set; }
     private List<EnemyModelInformation> enemyModels;
+    private List<ModelRecord> modelRecords;
 
     void Awake()
     {
@@ -23,6 +24,7 @@ public class EnemyModelDatabase : MonoBehaviour
 
     private void Start()
     {
+        modelRecords = new List<ModelRecord>();
         //makes a list of all the models at run time.
         //Done by searching the enemy script for the enemyId and getting the instanceId;
         enemyModels = new List<EnemyModelInformation>();
@@ -31,36 +33,59 @@ public class EnemyModelDatabase : MonoBehaviour
         {
             GameObject child = transform.GetChild(i).gameObject;
             //Change second param to draw from enemy script...
-            enemyModels.Add(new EnemyModelInformation(child.GetInstanceID(), 0, false));
+            enemyModels.Add(new EnemyModelInformation(child.GetInstanceID(), 0, child, false));
         }
     }
 
     public List<GameObject> RetrieveModels(List<byte> ids) 
     {
         List<GameObject> models = new List<GameObject>();
-        //runs through the list and grabs the models.
-        //when checked out, will make a record of their initial location, so when they are returned they can be stored correcty.
-        //Done by using.getinstanceid() on the gameobject to get the id and records that and the vector.
+        
         for (int i = 0; i < ids.Count; i++)
         {
-            EnemyModelInformation model = enemyModels.Find(x => x.modelEnemyId == ids[i] && x.isCheckedOut == false);
-            //check out model
-        }
+            for (int ii = 0; ii < enemyModels.Count; ii++)
+            {
+                if (enemyModels[ii].modelEnemyId == ids[i] && enemyModels[ii].isCheckedOut == false)
+                {
+                    EnemyModelInformation newModel = new EnemyModelInformation(enemyModels[ii].objectInstanceId, enemyModels[ii].modelEnemyId, enemyModels[ii].enemyModel, true);
+                    enemyModels[ii] = newModel;
+                    models.Add(enemyModels[ii].enemyModel);
 
+                    modelRecords.Add(new ModelRecord(enemyModels[ii].objectInstanceId, new Vector2(enemyModels[ii].enemyModel.transform.localPosition.x, enemyModels[ii].enemyModel.transform.localPosition.y)));
+                    break;
+                }
+            }
+        }
         return models;
     }
 }
 
+[Serializable]
 public struct EnemyModelInformation 
 {
     public int objectInstanceId;
     public byte modelEnemyId;
     public bool isCheckedOut;
+    public GameObject enemyModel;
 
-    public EnemyModelInformation(int instanceId, byte enemyId, bool checkedOut)
+    public EnemyModelInformation(int instanceId, byte enemyId, GameObject model, bool checkedOut)
     {
         objectInstanceId = instanceId;
         modelEnemyId = enemyId;
+        enemyModel = model;
         isCheckedOut = checkedOut;
+    }
+}
+
+[Serializable]
+public struct ModelRecord
+{
+    public int objectInstanceId;
+    public Vector2 originalCoordinates;
+
+    public ModelRecord(int instanceId, Vector2 coordinates)
+    {
+        objectInstanceId = instanceId;
+        originalCoordinates = coordinates;
     }
 }
