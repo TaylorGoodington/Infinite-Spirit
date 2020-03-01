@@ -35,7 +35,7 @@ public class CombatSceneController : MonoBehaviour
         List<byte> enemyIds = CombatScenarioDatabase.Instance.IdentifyEnemysForCombatScenario(scenario);
 
         //Recieves the list of enemy models
-        List<GameObject> enemyModels = ModelController.Instance.RetrieveEnemyCombatModels(enemyIds);
+        List<GameObject> enemyModels = EnemyModelDatabase.Instance.RetrieveModels(enemyIds);
 
         //grab enemy models
         //place enemies on set based on number of enemies and positioning requirements if necessary.

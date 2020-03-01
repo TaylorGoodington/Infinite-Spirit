@@ -25,6 +25,8 @@ public class CombatScenarioDatabase : MonoBehaviour
     {
         combatScenarios = new List<CombatScenario>();
         combatScenarios.Add(new CombatScenario(CombatScenarioName.Worm_Example, Location.Hub_Town, 1, 1, 1));
+        combatScenarios.Add(new CombatScenario(CombatScenarioName.Worm_Example_2, Location.Fields, 1, 1, 0));
+        combatScenarios.Add(new CombatScenario(CombatScenarioName.Boss_Example, Location.Test_1, 2, 0, 0));
     }
 
     public List<byte> IdentifyEnemysForCombatScenario(CombatScenarioName scenario)

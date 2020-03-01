@@ -3,7 +3,8 @@
     public enum Location
     {
         Hub_Town = 0,
-        Fields = 1
+        Fields = 1,
+        Test_1 = 2
     }
 
     public enum CombatState
@@ -22,7 +23,8 @@
     public enum CombatScenarioName
     {
         Worm_Example = 0,
-        Boss_Example = 1
+        Worm_Example_2 = 1,
+        Boss_Example = 2
     }
 
     //Events will have their own track as well as locations for combat, combat will be split into regular enemy scenario and boss enemy scenario.
