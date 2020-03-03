@@ -23,13 +23,13 @@ public class CombatSceneController : MonoBehaviour
     }
 
     //TODO - Write
-    public void ArrangeScene(CombatScenarioName scenario, Location location)
+    public void ArrangeScene(CombatScenarioName scenario)
     {
         //Finds the set
-        CombatSet targetSet = combatSetDatabase.DetermineSet(scenario, location);
+        GameObject targetSet = combatSetDatabase.RetrieveSet(CombatScenarioDatabase.Instance.DetermineCombatSet(scenario));
 
         //Starts the combat music
-        MusicManager.Instance.StartCombatMusic(targetSet.music);
+        MusicManager.Instance.StartCombatMusic(targetSet.GetComponent<CombatSet>().music);
 
         //Recieves the list of enemyIds
         List<byte> enemyIds = CombatScenarioDatabase.Instance.IdentifyEnemysForCombatScenario(scenario);
@@ -37,11 +37,17 @@ public class CombatSceneController : MonoBehaviour
         //Recieves the list of enemy models
         List<GameObject> enemyModels = EnemyModelDatabase.Instance.RetrieveModels(enemyIds);
 
-        //grab enemy models
         //place enemies on set based on number of enemies and positioning requirements if necessary.
+        targetSet.GetComponent<CombatSet>().PlaceEnemies(enemyModels);
+
         //grabs ally models
         //places ally models
         //grabs player model
         //places player model
+    }
+
+    private void PlaceEnemyModelsInScene()
+    {
+
     }
 }

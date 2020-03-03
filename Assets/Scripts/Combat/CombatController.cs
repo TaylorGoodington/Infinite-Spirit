@@ -44,6 +44,6 @@ public class CombatController : MonoBehaviour
         Debug.Log("Initializing");
         state = CombatState.Initializing;
         CombatUIController.Instance.TransitionInStart();
-        CombatSceneController.Instance.ArrangeScene(combatScenario, MasterControl.Instance.playerLocation);
+        CombatSceneController.Instance.ArrangeScene(combatScenario);
     }
 }

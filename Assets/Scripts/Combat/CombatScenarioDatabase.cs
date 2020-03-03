@@ -24,9 +24,9 @@ public class CombatScenarioDatabase : MonoBehaviour
     private void Start()
     {
         combatScenarios = new List<CombatScenario>();
-        combatScenarios.Add(new CombatScenario(CombatScenarioName.Worm_Example, Location.Hub_Town, 1, 1, 1));
-        combatScenarios.Add(new CombatScenario(CombatScenarioName.Worm_Example_2, Location.Fields, 1, 1, 0));
-        combatScenarios.Add(new CombatScenario(CombatScenarioName.Boss_Example, Location.Test_1, 2, 0, 0));
+        combatScenarios.Add(new CombatScenario(CombatScenarioName.Worm_Example, Location.Hub_Town, CombatSetName.Example_1, 1, 1, 1));
+        combatScenarios.Add(new CombatScenario(CombatScenarioName.Worm_Example_2, Location.Fields, CombatSetName.Example_1, 1, 1, 0));
+        combatScenarios.Add(new CombatScenario(CombatScenarioName.Boss_Example, Location.Test_1, CombatSetName.Example_1, 2, 0, 0));
     }
 
     public List<byte> IdentifyEnemysForCombatScenario(CombatScenarioName scenario)
@@ -41,6 +41,11 @@ public class CombatScenarioDatabase : MonoBehaviour
 
         return enemyIds;
     }
+
+    public CombatSetName DetermineCombatSet(CombatScenarioName scenario)
+    {
+        return combatScenarios.Find(x => x.combatScenarioName == scenario).set;
+    }
 }
 
 [Serializable]
@@ -48,14 +53,16 @@ public class CombatScenario
 {
     public CombatScenarioName combatScenarioName;
     public Location combatLocation;
+    public CombatSetName set;
     public byte combatEnemy1Id;
     public byte combatEnemy2Id;
     public byte combatEnemy3Id;
 
-    public CombatScenario(CombatScenarioName scenario, Location location, byte enemy1Id, byte enemy2Id, byte enemy3Id)
+    public CombatScenario(CombatScenarioName scenario, Location location, CombatSetName combatSet, byte enemy1Id, byte enemy2Id, byte enemy3Id)
 	{
         combatScenarioName = scenario;
         combatLocation = location;
+        set = combatSet;
         combatEnemy1Id = enemy1Id;
         combatEnemy2Id = enemy2Id;
         combatEnemy3Id = enemy3Id;

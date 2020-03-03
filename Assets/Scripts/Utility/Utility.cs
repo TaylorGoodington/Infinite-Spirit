@@ -27,6 +27,12 @@
         Boss_Example = 2
     }
 
+    public enum CombatSetName
+    {
+        Example_1 = 0,
+        Example_2 = 1
+    }
+
     //Events will have their own track as well as locations for combat, combat will be split into regular enemy scenario and boss enemy scenario.
     //public enum TrackScenario
     //{

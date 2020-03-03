@@ -5,23 +5,39 @@ using static Utility;
 
 public class CombatSetDatabase : MonoBehaviour
 {
-    public List<CombatSet> combatSets;
+    private List<CombatSetInformation> combatSets;
 
-    public CombatSet DetermineSet(CombatScenarioName scenario, Location location)
+    private void Start()
     {
-        CombatSet set = new CombatSet();
+        GenerateCombatSetInformation();
+    }
 
-        set = combatSets.Find(x => x.location == location && x.scenario == scenario);
+    private void GenerateCombatSetInformation()
+    {
+        combatSets = new List<CombatSetInformation>();
 
-        return set;
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            GameObject child = transform.GetChild(i).gameObject;
+            combatSets.Add(new CombatSetInformation(child.GetComponent<CombatSet>().setName, child));
+        }
+    }
+
+    public GameObject RetrieveSet(CombatSetName set)
+    {
+        return combatSets.Find(x => x.setName == set).set;
     }
 }
 
 [Serializable]
-public struct CombatSet
+public struct CombatSetInformation
 {
-    public Location location;
-    public CombatScenarioName scenario;
-    public GameObject setObject;
-    public AudioClip music;
+    public CombatSetName setName;
+    public GameObject set;
+
+    public CombatSetInformation(CombatSetName combatSetName, GameObject combatSet)
+    {
+        setName = combatSetName;
+        set = combatSet;
+    }
 }
