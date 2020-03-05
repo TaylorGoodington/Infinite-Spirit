@@ -11,10 +11,6 @@ public class ModelDatabaseController : MonoBehaviour
     public Transform allyDatabase;
     public Transform playerDatabase;
 
-    private List<ModelInformation> enemyModels;
-    private List<ModelInformation> allyModels;
-    private List<ModelInformation> playerModels;
-
     private Dictionary<int, Vector2> checkedOutEnemyModels = new Dictionary<int, Vector2>();
     private Dictionary<int, Vector2> checkedOutAllyModels = new Dictionary<int, Vector2>();
     private Dictionary<int, Vector2> checkedOutPlayerModels = new Dictionary<int, Vector2>();
@@ -32,62 +28,22 @@ public class ModelDatabaseController : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        GenerateEnemyModelList();
-        GenerateAllyModelList();
-        GeneratePlayerModelList();
-    }
-
-    private void GenerateEnemyModelList()
-    {
-        enemyModels = new List<ModelInformation>();
-
-        for (int i = 0; i < enemyDatabase.childCount; i++)
-        {
-            GameObject child = enemyDatabase.GetChild(i).gameObject;
-            enemyModels.Add(new ModelInformation(child.GetInstanceID(), child.GetComponent<CharacterInformation>().characterId, child));
-        }
-    }
-
-    private void GenerateAllyModelList()
-    {
-        allyModels = new List<ModelInformation>();
-
-        for (int i = 0; i < allyDatabase.childCount; i++)
-        {
-            GameObject child = allyDatabase.GetChild(i).gameObject;
-            allyModels.Add(new ModelInformation(child.GetInstanceID(), child.GetComponent<CharacterInformation>().characterId, child));
-        }
-    }
-
-    private void GeneratePlayerModelList()
-    {
-        playerModels = new List<ModelInformation>();
-
-        for (int i = 0; i < playerDatabase.childCount; i++)
-        {
-            GameObject child = playerDatabase.GetChild(i).gameObject;
-            playerModels.Add(new ModelInformation(child.GetInstanceID(), child.GetComponent<CharacterInformation>().characterId, child));
-        }
-    }
-
-    public List<GameObject> RetrieveEnemyModels(List<byte> ids) 
+    public List<GameObject> RetrieveEnemyModels(List<short> modelIds) 
     {
         List<GameObject> models = new List<GameObject>();
         
         //loops through all ids
-        for (int i = 0; i < ids.Count; i++)
+        for (int i = 0; i < modelIds.Count; i++)
         {
             //loops through all model info records 
-            for (int ii = 0; ii < enemyModels.Count; ii++)
+            for (int ii = 0; ii < enemyDatabase.transform.childCount; ii++)
             {
-                ModelInformation model = enemyModels[ii];
+                ModelInformation model = enemyDatabase.transform.GetChild(ii).GetComponent<ModelInformation>();
 
-                if (checkedOutEnemyModels.ContainsKey(model.objectInstanceId) == false && model.characterId == ids[i])
+                if (checkedOutEnemyModels.ContainsKey(model.GetInstanceID()) == false && model.modelId == modelIds[i])
                 {
-                    models.Add(model.model);
-                    checkedOutEnemyModels.Add(model.objectInstanceId, new Vector2(model.model.transform.localPosition.x, model.model.transform.localPosition.y));
+                    models.Add(model.gameObject);
+                    checkedOutEnemyModels.Add(model.GetInstanceID(), new Vector2(model.transform.localPosition.x, model.transform.localPosition.y));
                     break;
                 }
             }
@@ -95,22 +51,22 @@ public class ModelDatabaseController : MonoBehaviour
         return models;
     }
 
-    public List<GameObject> RetrieveAllyModels(List<byte> ids)
+    public List<GameObject> RetrieveAllyModels(List<short> modelIds)
     {
         List<GameObject> models = new List<GameObject>();
 
         //loops through all ids
-        for (int i = 0; i < ids.Count; i++)
+        for (int i = 0; i < modelIds.Count; i++)
         {
             //loops through all model info records 
-            for (int ii = 0; ii < allyModels.Count; ii++)
+            for (int ii = 0; ii < allyDatabase.transform.childCount; ii++)
             {
-                ModelInformation model = allyModels[ii];
+                ModelInformation model = allyDatabase.transform.GetChild(ii).GetComponent<ModelInformation>();
 
-                if (checkedOutAllyModels.ContainsKey(model.objectInstanceId) == false && model.characterId == ids[i])
+                if (checkedOutAllyModels.ContainsKey(model.GetInstanceID()) == false && model.modelId == modelIds[i])
                 {
-                    models.Add(model.model);
-                    checkedOutAllyModels.Add(model.objectInstanceId, new Vector2(model.model.transform.localPosition.x, model.model.transform.localPosition.y));
+                    models.Add(model.gameObject);
+                    checkedOutAllyModels.Add(model.GetInstanceID(), new Vector2(model.transform.localPosition.x, model.transform.localPosition.y));
                     break;
                 }
             }
@@ -118,41 +74,21 @@ public class ModelDatabaseController : MonoBehaviour
         return models;
     }
 
-    public List<GameObject> RetrievePlayerModels(List<byte> ids)
+    public GameObject RetrievePlayerModel(short id)
     {
-        List<GameObject> models = new List<GameObject>();
+        GameObject playerModel = null;
 
-        //loops through all ids
-        for (int i = 0; i < ids.Count; i++)
+        for (int ii = 0; ii < playerDatabase.transform.childCount; ii++)
         {
-            //loops through all model info records 
-            for (int ii = 0; ii < playerModels.Count; ii++)
-            {
-                ModelInformation model = playerModels[ii];
+            ModelInformation model = playerDatabase.transform.GetChild(ii).GetComponent<ModelInformation>();
 
-                if (checkedOutPlayerModels.ContainsKey(model.objectInstanceId) == false && model.characterId == ids[i])
-                {
-                    models.Add(model.model);
-                    checkedOutPlayerModels.Add(model.objectInstanceId, new Vector2(model.model.transform.localPosition.x, model.model.transform.localPosition.y));
-                    break;
-                }
+            if (checkedOutPlayerModels.ContainsKey(model.GetInstanceID()) == false && model.modelId == id)
+            {
+                checkedOutPlayerModels.Add(model.modelId, new Vector2(model.transform.localPosition.x, model.transform.localPosition.y));
+                playerModel = model.gameObject;
+                break;
             }
         }
-        return models;
-    }
-}
-
-[Serializable]
-public struct ModelInformation 
-{
-    public int objectInstanceId;
-    public byte characterId;
-    public GameObject model;
-
-    public ModelInformation(int instanceId, byte id, GameObject modelObject)
-    {
-        objectInstanceId = instanceId;
-        characterId = id;
-        model = modelObject;
+        return playerModel;
     }
 }

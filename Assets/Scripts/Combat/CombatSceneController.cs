@@ -32,7 +32,7 @@ public class CombatSceneController : MonoBehaviour
         MusicManager.Instance.StartCombatMusic(targetSet.GetComponent<CombatSet>().music);
 
         //Recieves the list of enemyIds
-        List<byte> enemyIds = CombatScenarioDatabase.Instance.IdentifyEnemysForCombatScenario(scenario);
+        List<short> enemyIds = CombatScenarioDatabase.Instance.IdentifyEnemysForCombatScenario(scenario);
 
         //Recieves the list of enemy models
         List<GameObject> enemyModels = ModelDatabaseController.Instance.RetrieveEnemyModels(enemyIds);
@@ -41,7 +41,7 @@ public class CombatSceneController : MonoBehaviour
         targetSet.GetComponent<CombatSet>().PlaceEnemies(enemyModels);
 
         //Recieves the list of AllyIds
-        List<byte> allyIds = MasterControl.Instance.allyIds;
+        List<short> allyIds = MasterControl.Instance.allyIds;
 
         //Recieves the list of ally models
         List<GameObject> allyModels = ModelDatabaseController.Instance.RetrieveAllyModels(allyIds);

@@ -11,7 +11,8 @@ public class MasterControl : MonoBehaviour
     public bool isInCombat;
     public bool isInDigitalWorld;
     public Location playerLocation;
-    public List<byte> allyIds;
+    public List<short> allyIds;
+    public short playerEquippedSoulId;
     #endregion
 
     private void Awake()
@@ -35,11 +36,12 @@ public class MasterControl : MonoBehaviour
         isInCombat = false;
         isInDigitalWorld = false;
         playerLocation = Location.Hub_Town;
-        allyIds = new List<byte>
+        allyIds = new List<short>
         {
             2,
             3
         };
+        playerEquippedSoulId = 6;
         #endregion
 
     }
