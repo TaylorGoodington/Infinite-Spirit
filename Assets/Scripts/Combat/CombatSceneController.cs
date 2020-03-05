@@ -35,15 +35,23 @@ public class CombatSceneController : MonoBehaviour
         List<byte> enemyIds = CombatScenarioDatabase.Instance.IdentifyEnemysForCombatScenario(scenario);
 
         //Recieves the list of enemy models
-        List<GameObject> enemyModels = EnemyModelDatabase.Instance.RetrieveModels(enemyIds);
+        List<GameObject> enemyModels = ModelDatabaseController.Instance.RetrieveEnemyModels(enemyIds);
 
-        //place enemies on set based on number of enemies and positioning requirements if necessary.
+        //place enemies on set
         targetSet.GetComponent<CombatSet>().PlaceEnemies(enemyModels);
 
-        //grabs ally models
-        //places ally models
-        //grabs player model
-        //places player model
+        //Recieves the list of AllyIds
+        List<byte> allyIds = MasterControl.Instance.allyIds;
+
+        //Recieves the list of ally models
+        List<GameObject> allyModels = ModelDatabaseController.Instance.RetrieveAllyModels(allyIds);
+
+        //place allies on set
+        targetSet.GetComponent<CombatSet>().PlaceAllies(allyModels);
+
+        //Recieves the playerModelId
+        //Recieves the player models
+        //place player on set
     }
 
     private void PlaceEnemyModelsInScene()
