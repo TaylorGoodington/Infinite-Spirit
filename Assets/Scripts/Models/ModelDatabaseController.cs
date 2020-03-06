@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using static Utility;
 
 public class ModelDatabaseController : MonoBehaviour
 {
@@ -38,7 +36,7 @@ public class ModelDatabaseController : MonoBehaviour
             //loops through all model info records 
             for (int ii = 0; ii < enemyDatabase.transform.childCount; ii++)
             {
-                ModelInformation model = enemyDatabase.transform.GetChild(ii).GetComponent<ModelInformation>();
+                ModelId model = enemyDatabase.transform.GetChild(ii).GetComponent<ModelId>();
 
                 if (checkedOutEnemyModels.ContainsKey(model.GetInstanceID()) == false && model.modelId == modelIds[i])
                 {
@@ -61,7 +59,7 @@ public class ModelDatabaseController : MonoBehaviour
             //loops through all model info records 
             for (int ii = 0; ii < allyDatabase.transform.childCount; ii++)
             {
-                ModelInformation model = allyDatabase.transform.GetChild(ii).GetComponent<ModelInformation>();
+                ModelId model = allyDatabase.transform.GetChild(ii).GetComponent<ModelId>();
 
                 if (checkedOutAllyModels.ContainsKey(model.GetInstanceID()) == false && model.modelId == modelIds[i])
                 {
@@ -80,7 +78,7 @@ public class ModelDatabaseController : MonoBehaviour
 
         for (int ii = 0; ii < playerDatabase.transform.childCount; ii++)
         {
-            ModelInformation model = playerDatabase.transform.GetChild(ii).GetComponent<ModelInformation>();
+            ModelId model = playerDatabase.transform.GetChild(ii).GetComponent<ModelId>();
 
             if (checkedOutPlayerModels.ContainsKey(model.GetInstanceID()) == false && model.modelId == id)
             {

@@ -22,7 +22,6 @@ public class CombatSceneController : MonoBehaviour
         }
     }
 
-    //TODO - Write
     public void ArrangeScene(CombatScenarioName scenario)
     {
         //Finds the set
@@ -40,6 +39,7 @@ public class CombatSceneController : MonoBehaviour
         //place enemies on set
         targetSet.GetComponent<CombatSet>().PlaceEnemies(enemyModels);
 
+        //TODO - Define better retrieval process
         //Recieves the list of AllyIds
         List<short> allyIds = MasterControl.Instance.allyIds;
 
@@ -49,13 +49,14 @@ public class CombatSceneController : MonoBehaviour
         //place allies on set
         targetSet.GetComponent<CombatSet>().PlaceAllies(allyModels);
 
+        //TODO - Define better retrieval process
         //Recieves the playerModelId
+        short playerModelId = MasterControl.Instance.playerEquippedSoulId;
+
         //Recieves the player models
+        GameObject playerModel = ModelDatabaseController.Instance.RetrievePlayerModel(playerModelId);
+
         //place player on set
-    }
-
-    private void PlaceEnemyModelsInScene()
-    {
-
+        targetSet.GetComponent<CombatSet>().PlacePlayer(playerModel);
     }
 }
