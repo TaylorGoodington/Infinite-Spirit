@@ -45,5 +45,11 @@ public class CombatController : MonoBehaviour
         state = CombatState.Initializing;
         CombatUIController.Instance.TransitionInStart();
         CombatSceneController.Instance.ArrangeScene(combatScenario);
+        //Initialize Player combat stats + skills
+            //class => base stats and skills
+            //tree stats => additional stats and skills
+            //skill list that is a combination of class skills list (derrived from the database) and aquired tree skills list
+                //tree skills database
+                //class skills database
     }
 }

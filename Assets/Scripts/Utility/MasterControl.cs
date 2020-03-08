@@ -1,19 +1,14 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using static Utility;
 
 public class MasterControl : MonoBehaviour
 {
     public static MasterControl Instance { get; set; }
 
-    #region ReEvaluate Later...
     public bool doesPlayerHaveControl;
     public bool isInCombat;
     public bool isInDigitalWorld;
-    public Location playerLocation;
-    public List<short> allyIds;
-    public short playerEquippedSoulId;
-    #endregion
+    [HideInInspector] public GameDataFile currentFile;
 
     private void Awake()
     {
@@ -35,15 +30,8 @@ public class MasterControl : MonoBehaviour
         doesPlayerHaveControl = false;
         isInCombat = false;
         isInDigitalWorld = false;
-        playerLocation = Location.Hub_Town;
-        allyIds = new List<short>
-        {
-            2,
-            3
-        };
-        playerEquippedSoulId = 6;
+        currentFile = GameDataFile.Aplha;
+        GameData.Instance.InititalizeGameData();
         #endregion
-
     }
-
 }

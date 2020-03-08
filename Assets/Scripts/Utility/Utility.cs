@@ -33,6 +33,13 @@
         Example_2 = 1
     }
 
+    public enum GameDataFile
+    {
+        Aplha = 1,
+        Beta = 2,
+        Omega = 3
+    }
+
     //Events will have their own track as well as locations for combat, combat will be split into regular enemy scenario and boss enemy scenario.
     //public enum TrackScenario
     //{

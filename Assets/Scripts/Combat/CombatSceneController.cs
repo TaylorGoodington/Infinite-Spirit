@@ -41,7 +41,7 @@ public class CombatSceneController : MonoBehaviour
 
         //TODO - Define better retrieval process
         //Recieves the list of AllyIds
-        List<short> allyIds = MasterControl.Instance.allyIds;
+        List<short> allyIds = GameData.Instance.allyIds;
 
         //Recieves the list of ally models
         List<GameObject> allyModels = ModelDatabaseController.Instance.RetrieveAllyModels(allyIds);
@@ -51,7 +51,7 @@ public class CombatSceneController : MonoBehaviour
 
         //TODO - Define better retrieval process
         //Recieves the playerModelId
-        short playerModelId = MasterControl.Instance.playerEquippedSoulId;
+        short playerModelId = GameData.Instance.playerEquippedSoulId;
 
         //Recieves the player models
         GameObject playerModel = ModelDatabaseController.Instance.RetrievePlayerModel(playerModelId);
