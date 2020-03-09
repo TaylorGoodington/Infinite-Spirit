@@ -40,6 +40,36 @@
         Omega = 3
     }
 
+    public enum ParadigmFamily
+    {
+        Protector = 0,
+        Tactician = 2,
+        SomethingForSorceror = 3,
+        FIghter = 4
+    }
+
+    public enum Paradigm
+    {
+        Trainee = 0,
+        Soldier = 1,
+        Knight = 2,
+        Paladin = 3,
+        Templar = 4,
+        Priest = 5,
+        Bishop = 6,
+        Sage = 7,
+        Shaman = 8,
+        Wizard = 9,
+        Mage = 10,
+        Bard = 11,
+        Sorceror = 12,
+        Archer = 13,
+        Ranger = 14,
+        Monk = 15,
+        Duelist = 16,
+        Hero = 17
+    }
+
     //Events will have their own track as well as locations for combat, combat will be split into regular enemy scenario and boss enemy scenario.
     //public enum TrackScenario
     //{

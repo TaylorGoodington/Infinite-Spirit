@@ -25,7 +25,7 @@ public class GameData : MonoBehaviour
     private List<short> Omega_AllyIds;
 
 
-    public short playerEquippedSoulId;
+    public short playerEquippedSoulParadigmId;
     private short Alpha_PlayerEquippedSoulId;
     private short Beta_PlayerEquippedSoulId;
     private short Omega_PlayerEquippedSoulId;
@@ -54,7 +54,7 @@ public class GameData : MonoBehaviour
         {
             playerLocation = Alpha_PlayerLocation;
             allyIds = Alpha_AllyIds;
-            playerEquippedSoulId = Alpha_PlayerEquippedSoulId;
+            playerEquippedSoulParadigmId = Alpha_PlayerEquippedSoulId;
             aquiredTreeNodes = Alpha_AquiredTreeNodes;
         }
         else if (MasterControl.Instance.currentFile == GameDataFile.Beta)
@@ -73,7 +73,7 @@ public class GameData : MonoBehaviour
             2,
             3
         };
-        playerEquippedSoulId = 6;
+        playerEquippedSoulParadigmId = 6;
         aquiredTreeNodes = new short[] {1, 2};
         #endregion
 
@@ -118,7 +118,7 @@ public class GameData : MonoBehaviour
         {
             Alpha_PlayerLocation = playerLocation;
             Alpha_AllyIds = allyIds;
-            Alpha_PlayerEquippedSoulId = playerEquippedSoulId;
+            Alpha_PlayerEquippedSoulId = playerEquippedSoulParadigmId;
             Alpha_AquiredTreeNodes = aquiredTreeNodes;
         }
         else if (MasterControl.Instance.currentFile == GameDataFile.Beta)

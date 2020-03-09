@@ -51,7 +51,7 @@ public class CombatSceneController : MonoBehaviour
 
         //TODO - Define better retrieval process
         //Recieves the playerModelId
-        short playerModelId = GameData.Instance.playerEquippedSoulId;
+        short playerModelId = GameData.Instance.playerEquippedSoulParadigmId;
 
         //Recieves the player models
         GameObject playerModel = ModelDatabaseController.Instance.RetrievePlayerModel(playerModelId);

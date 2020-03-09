@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-public class Abilities
+public class ClassSkills
 {
     public int abilityId;
     public string abilityName;
@@ -16,7 +16,7 @@ public class Abilities
     public int abilityTurnDuration;
     public int abilityAggro;
 
-    public Abilities(int id, string name, string description, int cost, int damage, int defense, int rank, int classId, int time, int duration, int aggro)
+    public ClassSkills(int id, string name, string description, int cost, int damage, int defense, int rank, int classId, int time, int duration, int aggro)
     {
         abilityId = id;
         abilityDescription = description;
