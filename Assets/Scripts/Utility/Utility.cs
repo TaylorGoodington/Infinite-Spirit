@@ -2,19 +2,19 @@
 {
     public enum Location
     {
-        Hub_Town = 0,
-        Fields = 1,
-        Test_1 = 2
+        Hub_Town,
+        Fields,
+        Test_1
     }
 
     public enum CombatState
     {
-        Initializing = 0,
-        Ready = 1,
-        Processing = 2,
-        Dialogue = 3,
-        Cutscene = 4,
-        Closing = 5
+        Initializing,
+        Ready,
+        Processing,
+        Dialogue,
+        Cutscene,
+        Closing
     }
 
     //Will be more specific and describe the enemy and number of enemies
@@ -22,59 +22,78 @@
     //Also an encounter in the digital world will have a scenario for each type of enemy and possible variations on number of enemies or compositions with supporting enemies.
     public enum CombatScenarioName
     {
-        Worm_Example = 0,
-        Worm_Example_2 = 1,
-        Boss_Example = 2
+        Worm_Example,
+        Worm_Example_2,
+        Boss_Example
     }
 
     public enum CombatSetName
     {
-        Example_1 = 0,
-        Example_2 = 1
+        Example_1,
+        Example_2
     }
 
     public enum GameDataFile
     {
-        Aplha = 1,
-        Beta = 2,
-        Omega = 3
+        Aplha,
+        Beta,
+        Omega
     }
 
-    public enum ParadigmFamily
-    {
-        Protector = 0,
-        Tactician = 2,
-        SomethingForSorceror = 3,
-        FIghter = 4
-    }
+    //public enum ParadigmFamily
+    //{
+    //    Protector = 0,
+    //    Tactician = 2,
+    //    SomethingForSorceror = 3,
+    //    FIghter = 4
+    //}
 
     public enum Paradigm
     {
-        Trainee = 0,
-        Soldier = 1,
-        Knight = 2,
-        Paladin = 3,
-        Templar = 4,
-        Priest = 5,
-        Bishop = 6,
-        Sage = 7,
-        Shaman = 8,
-        Wizard = 9,
-        Mage = 10,
-        Bard = 11,
-        Sorceror = 12,
-        Archer = 13,
-        Ranger = 14,
-        Monk = 15,
-        Duelist = 16,
-        Hero = 17
+        Trainee,
+        Soldier,
+        Knight,
+        Paladin,
+        Templar,
+        Priest,
+        Bishop,
+        Sage,
+        Shaman,
+        Wizard,
+        Mage,
+        Bard,
+        Sorceror,
+        Archer,
+        Ranger,
+        Monk,
+        Duelist,
+        Hero
     }
 
-    //Events will have their own track as well as locations for combat, combat will be split into regular enemy scenario and boss enemy scenario.
-    //public enum TrackScenario
-    //{
-    //    Exploration = 0,
-    //    Normal_Combat = 1,
-    //    Boss1_Combat = 2
-    //}
+    public enum StatusEffect
+    {
+        None,
+        Haste,
+        Slow
+    }
+
+    public enum EnemyTargeting
+    {
+        None,
+        Single,
+        All
+    }
+
+    public enum PartyTargeting
+    {
+        None,
+        Self,
+        All
+    }
+
+    public enum SkillUnlockType
+    {
+        Paradigm,
+        Tree
+    }
 }
