@@ -71,6 +71,6 @@ public class SoulParadigm
 		predictiveAlgorithms = soulPredictiveAlgorithms;
 		requiredParadigms = soulRequiredParadigms;
 		additionalParadigmSkills = skills;
-		icon = Resources.Load<Sprite>("Paradigm Icons/" + soulParadigm);
+		//icon = Resources.Load<Sprite>("Paradigm Icons/" + soulParadigm);
 	}
 }
