@@ -9,6 +9,7 @@ public class GameData : MonoBehaviour
 {
     public static GameData Instance { get; set; }
 
+    #region Player Data
     public short[] aquiredTreeNodes;
     private short[] Alpha_AquiredTreeNodes;
     private short[] Beta_AquiredTreeNodes;
@@ -19,16 +20,30 @@ public class GameData : MonoBehaviour
     private Location Beta_PlayerLocation;
     private Location Omega_PlayerLocation;
 
-    public List<short> allyIds;
-    private List<short> Alpha_AllyIds;
-    private List<short> Beta_AllyIds;
-    private List<short> Omega_AllyIds;
+    public Paradigm playerEquippedSoulParadigm;
+    private Paradigm Alpha_PlayerEquippedSoulParadigm;
+    private Paradigm Beta_PlayerEquippedSoulParadigm;
+    private Paradigm Omega_PlayerEquippedSoulParadigm;
+    #endregion
 
+    #region Ally Data
+    //ally: potential party members, current party members, (all, unlocked or not) ally personality data, (all, unlocked or not) allies equipped soul paradigm
+    public List<short> potentialPartyMemberCharacterIds;
+    private List<short> Alpha_PotentialPartyMemberCharacterIds;
+    private List<short> Beta_PotentialPartyMemberCharacterIds;
+    private List<short> Omega_PotentialPartyMemberCharacterIds;
 
-    public short playerEquippedSoulParadigmId;
-    private short Alpha_PlayerEquippedSoulId;
-    private short Beta_PlayerEquippedSoulId;
-    private short Omega_PlayerEquippedSoulId;
+    public List<short> currentPartyMemberCharacterIds;
+    private List<short> Alpha_CurrentPartyMemberCharacterIds;
+    private List<short> Beta_CurrentPartyMemberCharacterIds;
+    private List<short> Omega_CurrentPartyMemberCharacterIds;
+
+    //These dictionaries have the character id and the soul paradigm. They encompass all characters, regardless of access.
+    public Dictionary<short, Paradigm> allyEquippedSouldParadigms;
+    private Dictionary<short, Paradigm> Alpha_AllyEquippedSouldParadigms;
+    private Dictionary<short, Paradigm> Beta_AllyEquippedSouldParadigms;
+    private Dictionary<short, Paradigm> Omega_AllyEquippedSouldParadigms;
+    #endregion
 
     void Awake()
     {
@@ -53,8 +68,8 @@ public class GameData : MonoBehaviour
         if (MasterControl.Instance.currentFile == GameDataFile.Aplha)
         {
             playerLocation = Alpha_PlayerLocation;
-            allyIds = Alpha_AllyIds;
-            playerEquippedSoulParadigmId = Alpha_PlayerEquippedSoulId;
+            currentPartyMemberCharacterIds = Alpha_CurrentPartyMemberCharacterIds;
+            playerEquippedSoulParadigm = Alpha_PlayerEquippedSoulParadigm;
             aquiredTreeNodes = Alpha_AquiredTreeNodes;
         }
         else if (MasterControl.Instance.currentFile == GameDataFile.Beta)
@@ -68,13 +83,15 @@ public class GameData : MonoBehaviour
 
         #region Testing
         playerLocation = Location.Hub_Town;
-        allyIds = new List<short>
+        currentPartyMemberCharacterIds = new List<short>
         {
             2,
             3
         };
-        playerEquippedSoulParadigmId = 6;
+        playerEquippedSoulParadigm = Paradigm.Mage;
         aquiredTreeNodes = new short[] {1, 2};
+
+        //initialize current party members and a few of the ally equipped soul dictionaries
         #endregion
 
 
@@ -117,8 +134,8 @@ public class GameData : MonoBehaviour
         if (MasterControl.Instance.currentFile == GameDataFile.Aplha)
         {
             Alpha_PlayerLocation = playerLocation;
-            Alpha_AllyIds = allyIds;
-            Alpha_PlayerEquippedSoulId = playerEquippedSoulParadigmId;
+            Alpha_CurrentPartyMemberCharacterIds = currentPartyMemberCharacterIds;
+            Alpha_PlayerEquippedSoulParadigm = playerEquippedSoulParadigm;
             Alpha_AquiredTreeNodes = aquiredTreeNodes;
         }
         else if (MasterControl.Instance.currentFile == GameDataFile.Beta)
@@ -136,6 +153,6 @@ public class GameData : MonoBehaviour
 struct SaveData
 {
     public short[] Alpha_AquiredTreeNodes;
-    public short[] Beta_AquiredTreeNodes;
-    public short[] Omega_AquiredTreeNodes;
+    //public short[] Beta_AquiredTreeNodes;
+    //public short[] Omega_AquiredTreeNodes;
 }

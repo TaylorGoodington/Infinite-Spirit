@@ -41,6 +41,8 @@ public class CombatantInformationController : MonoBehaviour
 [Serializable]
 public class CombatantInformation
 {
+    public short characterId;
+    public CombatantType combatantType;
     public Dictionary<StatusEffect, float> statusEffects;
 
     //Base stats that go unchanged in a combat.

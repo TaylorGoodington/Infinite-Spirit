@@ -1,5 +1,7 @@
 ﻿public class Utility
 {
+    public static short PLAYER_CHARACTER_ID = 6;
+
     public enum Location
     {
         Hub_Town,
