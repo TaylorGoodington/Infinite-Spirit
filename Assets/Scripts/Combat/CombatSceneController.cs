@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using static Utility;
 
@@ -22,7 +20,7 @@ public class CombatSceneController : MonoBehaviour
         }
     }
 
-    public void ArrangeScene(CombatScenarioName scenario)
+    public Dictionary<int,short> ArrangeScene(CombatScenarioName scenario)
     {
         //Finds the set
         GameObject targetSet = combatSetDatabase.RetrieveSet(CombatScenarioDatabase.Instance.DetermineCombatSet(scenario));
@@ -39,7 +37,6 @@ public class CombatSceneController : MonoBehaviour
         //place enemies on set
         targetSet.GetComponent<CombatSet>().PlaceEnemies(enemyModels);
 
-        //TODO - Define better retrieval process
         //Recieves the list of AllyIds
         List<short> allyIds = GameData.Instance.allyIds;
 
@@ -49,7 +46,6 @@ public class CombatSceneController : MonoBehaviour
         //place allies on set
         targetSet.GetComponent<CombatSet>().PlaceAllies(allyModels);
 
-        //TODO - Define better retrieval process
         //Recieves the playerModelId
         short playerModelId = GameData.Instance.playerEquippedSoulParadigmId;
 
@@ -58,5 +54,11 @@ public class CombatSceneController : MonoBehaviour
 
         //place player on set
         targetSet.GetComponent<CombatSet>().PlacePlayer(playerModel);
+
+        //TODO Finish...
+        //passes back dictionary of objectinstanceids and model ids.
+        Dictionary<int, short> combatantModelInfo = new Dictionary<int, short>();
+
+        return combatantModelInfo;
     }
 }

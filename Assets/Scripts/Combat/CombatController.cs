@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Utility;
@@ -8,6 +8,7 @@ public class CombatController : MonoBehaviour
     public static CombatController Instance { get; set; }
     CombatState state;
     CombatScenarioName combatScenario;
+    public Combatant[] combatants;
 
     void Awake()
     {
@@ -44,12 +45,24 @@ public class CombatController : MonoBehaviour
         Debug.Log("Initializing");
         state = CombatState.Initializing;
         CombatUIController.Instance.TransitionInStart();
-        CombatSceneController.Instance.ArrangeScene(combatScenario);
-        //Initialize Player combat stats + skills
-            //class => base stats and skills
-            //tree stats => additional stats and skills
-            //skill list that is a combination of class skills list (derrived from the database) and aquired tree skills list
-                //tree skills database
-                //class skills database
+        Dictionary<int, short> combatantModelInfo = CombatSceneController.Instance.ArrangeScene(combatScenario);
+        BuildCombatantArray(combatantModelInfo);
+        CombatantInformationController.Instance.CombatantInformationInitialization(combatScenario);
+        
     }
+
+    private void BuildCombatantArray(Dictionary<int, short> combatantModelInfo)
+    {
+        //combatants = new Combatant[];
+        //takes the combatantModels dictionary and creates the combtants array
+            //need to finish the CombatSceneController ArrangeScene method....
+    }
+}
+
+[Serializable]
+public class Combatant
+{
+    public int objectInstanceId;
+    public short characterId;
+    public CombatantType combatantType;
 }

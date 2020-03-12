@@ -96,4 +96,11 @@
         Paradigm,
         Tree
     }
+
+    public enum CombatantType
+    {
+        Player,
+        Ally,
+        Enemy
+    }
 }
