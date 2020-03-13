@@ -123,10 +123,6 @@ public class GameData : MonoBehaviour
 
         };
 
-        //aquiredTreeNodes = new List<TreeNode>();
-        //aquiredTreeNodes.Add(TreeNodeDatabase.Instance.treeNodeDatabase[0]);
-        //aquiredTreeNodes.Add(TreeNodeDatabase.Instance.treeNodeDatabase[1]);
-
         allyEquippedSouldParadigms = new Dictionary<int, Paradigm>()
         {
             {2, Paradigm.Soldier },

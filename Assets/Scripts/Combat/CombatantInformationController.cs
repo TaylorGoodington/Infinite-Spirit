@@ -28,8 +28,11 @@ public class CombatantInformationController : MonoBehaviour
         combatantsInformation.Add(new CombatantInformation(PLAYER_CHARACTER_ID, CombatantType.Player, GameData.Instance.playerCoreFirewall, GameData.Instance.playerCompiler, GameData.Instance.playerDefenseMatrix, GameData.Instance.playerPredictiveAlgorithms));
 
         //add ally information
+            //figure out bonus for personality similarities
+            //figure out bonus for aquired tree nodes
 
         //add enemy information
+            //figure out scaling bonus for aquired nodes
     }
 }
 
