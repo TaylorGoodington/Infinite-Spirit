@@ -37,14 +37,14 @@ public class ModelDatabaseController : MonoBehaviour
             new ModelIdInformation(3, 5, null),
             new ModelIdInformation(4, 2, Paradigm.Soldier),
             new ModelIdInformation(5, 3, Paradigm.Bishop),
-            new ModelIdInformation(6, 6, Paradigm.Mage),
+            new ModelIdInformation(6, 6, Paradigm.Sorceror),
             new ModelIdInformation(7, 1, null),
             new ModelIdInformation(8, 1, null),
             new ModelIdInformation(9, 6, Paradigm.Sorceror)
         };
     }
 
-    public List<GameObject> RetrieveEnemyModels(List<short> modelIds) 
+    public List<GameObject> RetrieveEnemyModels(List<int> modelIds) 
     {
         List<GameObject> models = new List<GameObject>();
         
@@ -70,7 +70,7 @@ public class ModelDatabaseController : MonoBehaviour
     public List<GameObject> RetrieveAllyModels()
     {
         List<GameObject> models = new List<GameObject>();
-        List<short> modelIds = new List<short>();
+        List<int> modelIds = new List<int>();
 
         foreach (var allyId in GameData.Instance.currentPartyMemberCharacterIds)
         {
@@ -99,7 +99,7 @@ public class ModelDatabaseController : MonoBehaviour
     public GameObject RetrievePlayerModel()
     {
         GameObject playerModel = null;
-        short playerModelId = modelInformationDatabase.Find(x => x.characterId == PLAYER_CHARACTER_ID && x.paradigm == GameData.Instance.playerEquippedSoulParadigm).modelId;
+        int playerModelId = modelInformationDatabase.Find(x => x.characterId == PLAYER_CHARACTER_ID && x.paradigm == GameData.Instance.playerEquippedSoulParadigm).modelId;
 
         for (int ii = 0; ii < playerDatabase.transform.childCount; ii++)
         {
@@ -118,11 +118,11 @@ public class ModelDatabaseController : MonoBehaviour
 
 public struct ModelIdInformation
 {
-    public short modelId;
-    public short characterId;
+    public int modelId;
+    public int characterId;
     public Paradigm? paradigm;
 
-    public ModelIdInformation(short modelId, short characterId, Paradigm? paradigm)
+    public ModelIdInformation(int modelId, int characterId, Paradigm? paradigm)
     {
         this.modelId = modelId;
         this.characterId = characterId;

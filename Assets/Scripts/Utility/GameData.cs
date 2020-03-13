@@ -10,10 +10,10 @@ public class GameData : MonoBehaviour
     public static GameData Instance { get; set; }
 
     #region Player Data
-    public short[] aquiredTreeNodes;
-    private short[] Alpha_AquiredTreeNodes;
-    private short[] Beta_AquiredTreeNodes;
-    private short[] Omega_AquiredTreeNodes;
+    public List<TreeNode> aquiredTreeNodes;
+    private List<TreeNode> Alpha_AquiredTreeNodes;
+    private List<TreeNode> Beta_AquiredTreeNodes;
+    private List<TreeNode> Omega_AquiredTreeNodes;
 
     public Location playerLocation;
     private Location Alpha_PlayerLocation;
@@ -24,25 +24,47 @@ public class GameData : MonoBehaviour
     private Paradigm Alpha_PlayerEquippedSoulParadigm;
     private Paradigm Beta_PlayerEquippedSoulParadigm;
     private Paradigm Omega_PlayerEquippedSoulParadigm;
+
+    public int playerCoreFirewall;
+    private int Alpha_PlayerCoreFirewall;
+    private int Beta_PlayerCoreFirewall;
+    private int Omega_PlayerCoreFirewall;
+
+    public int playerCompiler;
+    private int Alpha_PlayerCompiler;
+    private int Beta_PlayerCompiler;
+    private int Omega_PlayerCompiler;
+
+    public int playerDefenseMatrix;
+    private int Alpha_PlayerDefenseMatrix;
+    private int Beta_PlayerDefenseMatrix;
+    private int Omega_PlayerDefenseMatrix;
+
+    public int playerPredictiveAlgorithms;
+    private int Alpha_PlayerPredictiveAlgorithms;
+    private int Beta_PlayerPredictiveAlgorithms;
+    private int Omega_PlayerPredictiveAlgorithms;
+
+    public List<Skill> playerSkills;
     #endregion
 
     #region Ally Data
     //ally: potential party members, current party members, (all, unlocked or not) ally personality data, (all, unlocked or not) allies equipped soul paradigm
-    public List<short> potentialPartyMemberCharacterIds;
-    private List<short> Alpha_PotentialPartyMemberCharacterIds;
-    private List<short> Beta_PotentialPartyMemberCharacterIds;
-    private List<short> Omega_PotentialPartyMemberCharacterIds;
+    public List<int> potentialPartyMemberCharacterIds;
+    private List<int> Alpha_PotentialPartyMemberCharacterIds;
+    private List<int> Beta_PotentialPartyMemberCharacterIds;
+    private List<int> Omega_PotentialPartyMemberCharacterIds;
 
-    public List<short> currentPartyMemberCharacterIds;
-    private List<short> Alpha_CurrentPartyMemberCharacterIds;
-    private List<short> Beta_CurrentPartyMemberCharacterIds;
-    private List<short> Omega_CurrentPartyMemberCharacterIds;
+    public List<int> currentPartyMemberCharacterIds;
+    private List<int> Alpha_CurrentPartyMemberCharacterIds;
+    private List<int> Beta_CurrentPartyMemberCharacterIds;
+    private List<int> Omega_CurrentPartyMemberCharacterIds;
 
     //These dictionaries have the character id and the soul paradigm. They encompass all characters, regardless of access.
-    public Dictionary<short, Paradigm> allyEquippedSouldParadigms;
-    private Dictionary<short, Paradigm> Alpha_AllyEquippedSouldParadigms;
-    private Dictionary<short, Paradigm> Beta_AllyEquippedSouldParadigms;
-    private Dictionary<short, Paradigm> Omega_AllyEquippedSouldParadigms;
+    public Dictionary<int, Paradigm> allyEquippedSouldParadigms;
+    private Dictionary<int, Paradigm> Alpha_AllyEquippedSouldParadigms;
+    private Dictionary<int, Paradigm> Beta_AllyEquippedSouldParadigms;
+    private Dictionary<int, Paradigm> Omega_AllyEquippedSouldParadigms;
     #endregion
 
     void Awake()
@@ -71,6 +93,11 @@ public class GameData : MonoBehaviour
             currentPartyMemberCharacterIds = Alpha_CurrentPartyMemberCharacterIds;
             playerEquippedSoulParadigm = Alpha_PlayerEquippedSoulParadigm;
             aquiredTreeNodes = Alpha_AquiredTreeNodes;
+            playerCoreFirewall = Alpha_PlayerCoreFirewall;
+            playerCompiler = Alpha_PlayerCompiler;
+            playerDefenseMatrix = Alpha_PlayerDefenseMatrix;
+            playerPredictiveAlgorithms = Alpha_PlayerPredictiveAlgorithms;
+
         }
         else if (MasterControl.Instance.currentFile == GameDataFile.Beta)
         {
@@ -83,18 +110,87 @@ public class GameData : MonoBehaviour
 
         #region Testing
         playerLocation = Location.Hub_Town;
-        currentPartyMemberCharacterIds = new List<short>
+        currentPartyMemberCharacterIds = new List<int>
         {
             2,
             3
         };
-        playerEquippedSoulParadigm = Paradigm.Mage;
-        aquiredTreeNodes = new short[] {1, 2};
+        playerEquippedSoulParadigm = Paradigm.Sorceror;
+        aquiredTreeNodes = new List<TreeNode>()
+        {
+            TreeNodeDatabase.Instance.treeNodeDatabase[0],
+            TreeNodeDatabase.Instance.treeNodeDatabase[1]
 
-        //initialize current party members and a few of the ally equipped soul dictionaries
+        };
+
+        //aquiredTreeNodes = new List<TreeNode>();
+        //aquiredTreeNodes.Add(TreeNodeDatabase.Instance.treeNodeDatabase[0]);
+        //aquiredTreeNodes.Add(TreeNodeDatabase.Instance.treeNodeDatabase[1]);
+
+        allyEquippedSouldParadigms = new Dictionary<int, Paradigm>()
+        {
+            {2, Paradigm.Soldier },
+            {3, Paradigm.Bishop }
+        };
+
+        UpdatePlayerStatsAndSkills();
         #endregion
 
 
+    }
+
+    private void UpdatePlayerStatsAndSkills()
+    {
+        SoulParadigm paradigmInformation = SoulParadigmDatabase.Instance.SoulParadigms.Find(x => x.paradigm == playerEquippedSoulParadigm);
+
+        playerCoreFirewall = paradigmInformation.coreFirewall + SumOfAquiredTreeNodesByType(TreeNodeType.Core_Firewall);
+        playerCompiler = paradigmInformation.compiler + SumOfAquiredTreeNodesByType(TreeNodeType.Compiler);
+        playerDefenseMatrix = paradigmInformation.defenseMatrix + SumOfAquiredTreeNodesByType(TreeNodeType.Defense_Matrix);
+        playerPredictiveAlgorithms = paradigmInformation.predictiveAlgorithms + SumOfAquiredTreeNodesByType(TreeNodeType.Predictive_Algorithms);
+
+        CompilePlayerSkillList();
+    }
+
+    //Player Only
+    private int SumOfAquiredTreeNodesByType(TreeNodeType nodeType)
+    {
+        int sum = 0;
+        foreach (var node in aquiredTreeNodes)
+        {
+            if (node.nodeType == nodeType)
+            {
+                sum += node.nodeValue;
+            }
+        }
+
+        return sum;
+    }
+
+    private void CompilePlayerSkillList ()
+    {
+        playerSkills = new List<Skill>();
+
+        foreach (var skill in SkillDatabase.Instance.skillDatabase)
+        {
+            //checks equipped paradigm for skills
+            if (skill.requiredParadigm == playerEquippedSoulParadigm)
+            {
+                playerSkills.Add(skill);
+            }
+
+            //checks additional paradigm skills
+            Paradigm[] additionalParadigmSkills = SoulParadigmDatabase.Instance.SoulParadigms.Find(x => x.paradigm == playerEquippedSoulParadigm).additionalParadigmSkills;
+            if (additionalParadigmSkills != null)
+            {
+                foreach (var additionalParadigm in additionalParadigmSkills)
+                {
+                    if (skill.requiredParadigm == additionalParadigm)
+                    {
+                        playerSkills.Add(skill);
+                    }
+                }
+            }
+        }
     }
 
     private void LoadSaveData()
@@ -152,7 +248,5 @@ public class GameData : MonoBehaviour
 [Serializable]
 struct SaveData
 {
-    public short[] Alpha_AquiredTreeNodes;
-    //public short[] Beta_AquiredTreeNodes;
-    //public short[] Omega_AquiredTreeNodes;
+    public List<TreeNode> Alpha_AquiredTreeNodes;
 }

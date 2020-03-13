@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
-    public byte id;
+    public int id;
 
 }

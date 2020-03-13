@@ -5,7 +5,7 @@ using static Utility;
 public class SoulParadigmDatabase : MonoBehaviour {
 
 	public static SoulParadigmDatabase Instance { get; set; }
-	private List<SoulParadigm> SoulParadigms;
+	public List<SoulParadigm> SoulParadigms;
 
 	void Awake()
 	{
@@ -52,16 +52,16 @@ public class SoulParadigm
 
 	public Paradigm paradigm;
 	public string description;
-	public byte coreFirewall;
-	public byte compiler;
-	public byte defenseMatrix;
-	public byte predictiveAlgorithms;
+	public int coreFirewall;
+	public int compiler;
+	public int defenseMatrix;
+	public int predictiveAlgorithms;
 	public Paradigm[] requiredParadigms;
 	public Paradigm[] additionalParadigmSkills;
 	public Sprite icon;
 
-	public SoulParadigm(Paradigm soulParadigm, string souldDescription, byte soulCoreFirewall, byte soulCompiler, byte soulDefenseMatrix,
-		byte soulPredictiveAlgorithms, Paradigm[] soulRequiredParadigms, Paradigm[] skills)
+	public SoulParadigm(Paradigm soulParadigm, string souldDescription, int soulCoreFirewall, int soulCompiler, int soulDefenseMatrix,
+		int soulPredictiveAlgorithms, Paradigm[] soulRequiredParadigms, Paradigm[] additionalParadigmSkills)
 	{
 		paradigm = soulParadigm;
 		description = souldDescription;
@@ -70,7 +70,7 @@ public class SoulParadigm
 		defenseMatrix = soulDefenseMatrix;
 		predictiveAlgorithms = soulPredictiveAlgorithms;
 		requiredParadigms = soulRequiredParadigms;
-		additionalParadigmSkills = skills;
+		this.additionalParadigmSkills = additionalParadigmSkills;
 		//icon = Resources.Load<Sprite>("Paradigm Icons/" + soulParadigm);
 	}
 }

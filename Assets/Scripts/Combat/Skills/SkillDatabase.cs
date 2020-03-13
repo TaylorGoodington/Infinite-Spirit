@@ -1,11 +1,11 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using static Utility;
 
 public class SkillDatabase : MonoBehaviour
 {
     public static SkillDatabase Instance { get; set; }
-    private List<Skill> skills;
+    public List<Skill> skillDatabase;
 
     void Awake()
     {
@@ -22,7 +22,7 @@ public class SkillDatabase : MonoBehaviour
 
     private void Start()
     {
-        skills = new List<Skill>
+        skillDatabase = new List<Skill>
         {
             new Skill(0, "Barage 1", "Deals Damage to all enemies on screen.", SkillUnlockType.Paradigm, Paradigm.Wizard, 5, 1.8f, 0.9f, 0.1f, 1, EnemyTargeting.All, StatusEffect.None, 0, PartyTargeting.None, StatusEffect.None, 0),
             new Skill(1, "Barage 2", "Deals Damage to all enemies on screen.", SkillUnlockType.Paradigm, Paradigm.Mage, 5, 1.8f, 0.9f, 0.1f, 1, EnemyTargeting.All, StatusEffect.None, 0, PartyTargeting.None, StatusEffect.None, 0),
@@ -92,16 +92,16 @@ public class SkillDatabase : MonoBehaviour
 [System.Serializable]
 public class Skill
 {
-    public byte id;
+    public int id;
     public string name;
     public string description;
     public SkillUnlockType unlockType;
     public Paradigm requiredParadigm;
-    public byte powerCost;
+    public int powerCost;
     public float attackRating;
     public float defenseRating;
     public float chargeTime;
-    public byte abilityAggro;
+    public int abilityAggro;
     public EnemyTargeting enemyTargeting;
     public StatusEffect enemyStatusEffect;
     public float enemyStatusEffectDuration;
@@ -110,8 +110,8 @@ public class Skill
     public float partyStatusEffectDuration;
     public Sprite icon;
 
-    public Skill(byte id, string name, string description, SkillUnlockType unlockType, Paradigm requiredParadigm, byte powerCost, float chargeTime, float attackRating,
-         float defenseRating, byte abilityAggro, EnemyTargeting enemyTargeting, StatusEffect enemyStatusEffect, float enemyStatusEffectDuration, PartyTargeting partyTargeting,
+    public Skill(int id, string name, string description, SkillUnlockType unlockType, Paradigm requiredParadigm, int powerCost, float chargeTime, float attackRating,
+         float defenseRating, int abilityAggro, EnemyTargeting enemyTargeting, StatusEffect enemyStatusEffect, float enemyStatusEffectDuration, PartyTargeting partyTargeting,
         StatusEffect partyStatusEffect, float partyStatusEffectDuration)
     {
         this.id = id;

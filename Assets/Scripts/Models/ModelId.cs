@@ -2,5 +2,5 @@
 
 public class ModelId : MonoBehaviour
 {
-    public short modelId;
+    public int modelId;
 }

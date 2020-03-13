@@ -29,9 +29,9 @@ public class CombatScenarioDatabase : MonoBehaviour
         combatScenarios.Add(new CombatScenario(CombatScenarioName.Boss_Example, Location.Test_1, CombatSetName.Example_1, 2, 0, 0));
     }
 
-    public List<short> IdentifyEnemysForCombatScenario(CombatScenarioName scenario)
+    public List<int> IdentifyEnemysForCombatScenario(CombatScenarioName scenario)
     {
-        List<short> enemyIds = new List<short>();
+        List<int> enemyIds = new List<int>();
 
         CombatScenario combatScenario = combatScenarios.Find(x => x.combatScenarioName == scenario);
 
@@ -54,11 +54,11 @@ public class CombatScenario
     public CombatScenarioName combatScenarioName;
     public Location combatLocation;
     public CombatSetName set;
-    public short enemy1ModelId;
-    public short enemy2ModelId;
-    public short enemy3ModelId;
+    public int enemy1ModelId;
+    public int enemy2ModelId;
+    public int enemy3ModelId;
 
-    public CombatScenario(CombatScenarioName scenario, Location location, CombatSetName combatSet, short enemy1Id, short enemy2Id, short enemy3Id)
+    public CombatScenario(CombatScenarioName scenario, Location location, CombatSetName combatSet, int enemy1Id, int enemy2Id, int enemy3Id)
 	{
         combatScenarioName = scenario;
         combatLocation = location;

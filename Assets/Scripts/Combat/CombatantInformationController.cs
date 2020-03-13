@@ -6,7 +6,7 @@ using static Utility;
 public class CombatantInformationController : MonoBehaviour
 {
     public static CombatantInformationController Instance { get; set; }
-    private CombatantInformation[] combatantsInformation;
+    private List<CombatantInformation> combatantsInformation;
 
     void Awake()
     {
@@ -23,33 +23,37 @@ public class CombatantInformationController : MonoBehaviour
 
     public void CombatantInformationInitialization(CombatScenarioName scenario)
     {
-        //builds the combatantsInformation array.
+        combatantsInformation = new List<CombatantInformation>();
 
-        //grab player info from gamedata
-            //Initialize Player combat stats + skills
-                //class => base stats and skills
-                //tree stats => additional stats and skills
-                    //skill list that is a combination of class skills list (derrived from the database) and aquired tree skills list
-                    //tree skills database
-                    //class skills database
+        combatantsInformation.Add(new CombatantInformation(PLAYER_CHARACTER_ID, CombatantType.Player, GameData.Instance.playerCoreFirewall, GameData.Instance.playerCompiler, GameData.Instance.playerDefenseMatrix, GameData.Instance.playerPredictiveAlgorithms));
 
-        //use scenario to find enemies
-        //grab ally info from gamedata
+        //add ally information
+
+        //add enemy information
     }
 }
 
 [Serializable]
 public class CombatantInformation
 {
-    public short characterId;
+    public int characterId;
     public CombatantType combatantType;
+    public int coreFirewall;
+    public int compiler;
+    public int defenseMatrix;
+    public int predictiveAlgorithms;
+
     public Dictionary<StatusEffect, float> statusEffects;
-
-    //Base stats that go unchanged in a combat.
-    public byte coreFirewall;
-    public byte compiler;
-    public byte defenseMatrix;
-
     public int targetCombatantId; //Maybe just the array index for combatants in the CombatController
-    public int[] availableSkills;
+    public Skill[] availableSkills; //Just for enemies???
+
+    public CombatantInformation(int characterId, CombatantType combatantType, int coreFirewall, int compiler, int defenseMatrix, int predictiveAlgorithms)
+    {
+        this.characterId = characterId;
+        this.combatantType = combatantType;
+        this.coreFirewall = coreFirewall;
+        this.compiler = compiler;
+        this.defenseMatrix = defenseMatrix;
+        this.predictiveAlgorithms = predictiveAlgorithms;
+    }
 }

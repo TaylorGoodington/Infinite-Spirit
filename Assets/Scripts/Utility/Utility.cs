@@ -42,14 +42,6 @@
         Omega
     }
 
-    //public enum ParadigmFamily
-    //{
-    //    Protector = 0,
-    //    Tactician = 2,
-    //    SomethingForSorceror = 3,
-    //    FIghter = 4
-    //}
-
     public enum Paradigm
     {
         Trainee,
@@ -104,5 +96,14 @@
         Player,
         Ally,
         Enemy
+    }
+
+    public enum TreeNodeType
+    {
+        Core_Firewall,
+        Compiler,
+        Defense_Matrix,
+        Predictive_Algorithms,
+        Skill
     }
 }
