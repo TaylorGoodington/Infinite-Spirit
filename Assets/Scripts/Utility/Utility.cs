@@ -1,6 +1,7 @@
 ﻿public class Utility
 {
     public static short PLAYER_CHARACTER_ID = 6;
+    public static float PERSONALITY_BONUS_THRESHOLD = .7f;
 
     public enum Location
     {
@@ -105,5 +106,15 @@
         Defense_Matrix,
         Predictive_Algorithms,
         Skill
+    }
+
+    public enum PersonalityCategory
+    {
+        Patience,
+        Something,
+        Cunning,
+        Logical,
+        Kindness,
+        Charisma
     }
 }

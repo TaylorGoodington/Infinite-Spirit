@@ -25,6 +25,7 @@ public class GameData : MonoBehaviour
     private Paradigm Beta_PlayerEquippedSoulParadigm;
     private Paradigm Omega_PlayerEquippedSoulParadigm;
 
+    #region Stats
     public int playerCoreFirewall;
     private int Alpha_PlayerCoreFirewall;
     private int Beta_PlayerCoreFirewall;
@@ -44,9 +45,42 @@ public class GameData : MonoBehaviour
     private int Alpha_PlayerPredictiveAlgorithms;
     private int Beta_PlayerPredictiveAlgorithms;
     private int Omega_PlayerPredictiveAlgorithms;
+    #endregion Stats
+
+    #region Personality Values
+    public float playerPatience;
+    private float Alpha_PlayerPatience;
+    private float Beta_PlayerPatience;
+    private float Omega_PlayerPatience;
+
+    public float playerSomething;
+    private float Alpha_PlayerSomething;
+    private float Beta_PlayerSomething;
+    private float Omega_PlayerSomething;
+
+    public float playerCunning;
+    private float Alpha_PlayerCunning;
+    private float Beta_PlayerCunning;
+    private float Omega_PlayerCunning;
+
+    public float playerLogical;
+    private float Alpha_PlayerLogical;
+    private float Beta_PlayerLogical;
+    private float Omega_PlayerLogical;
+
+    public float playerKindness;
+    private float Alpha_PlayerKindness;
+    private float Beta_PlayerKindness;
+    private float Omega_PlayerKindness;
+
+    public float playerCharisma;
+    private float Alpha_PlayerCharisma;
+    private float Beta_PlayerCharisma;
+    private float Omega_PlayerCharisma;
+    #endregion Personality Values
 
     public List<Skill> playerSkills;
-    #endregion
+    #endregion Player Data
 
     #region Ally Data
     //ally: potential party members, current party members, (all, unlocked or not) ally personality data, (all, unlocked or not) allies equipped soul paradigm
@@ -129,10 +163,15 @@ public class GameData : MonoBehaviour
             {3, Paradigm.Bishop }
         };
 
+        playerPatience = 16.5f;
+        playerSomething = 16.5f;
+        playerCunning = 16.5f;
+        playerLogical = 16.5f;
+        playerKindness = 16.5f;
+        playerCharisma = 16.5f;
+
         UpdatePlayerStatsAndSkills();
         #endregion
-
-
     }
 
     private void UpdatePlayerStatsAndSkills()
