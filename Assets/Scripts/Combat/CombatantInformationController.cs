@@ -40,8 +40,6 @@ public class CombatantInformationController : MonoBehaviour
 
             }
 
-            //figure out bonus for aquired tree nodes
-
         }
 
         //add enemy information
@@ -247,10 +245,13 @@ public class CombatantInformation
     public int compiler;
     public int defenseMatrix;
     public int predictiveAlgorithms;
+    public int cpu;
+    public int powerSupply;
+
 
     public Dictionary<StatusEffect, float> statusEffects;
     public int targetCombatantId; //Maybe just the array index for combatants in the CombatController
-    public Skill[] availableSkills; //Just for enemies???
+    public int [] availableSkills; //Just for enemies???
 
     public CombatantInformation(int characterId, CombatantType combatantType, int coreFirewall, int compiler, int defenseMatrix, int predictiveAlgorithms)
     {
