@@ -117,4 +117,38 @@
         Kindness,
         Charisma
     }
+
+    public enum InputStates
+    {
+        Null,
+        None,
+        Overworld,
+        Menus,
+        Dialogue
+    }
+
+    public enum ButtonPresses
+    {
+        None,
+        Interact,
+        Jump,
+        Cast,
+        Select,
+        Advance
+    }
+
+    public enum SoundEffects
+    {
+        Null,
+        Company_Logo,
+        Player_Death
+    }
+
+    public enum MusicTracks
+    {
+        Null,
+        Level_Zero_Normal,
+        Level_One_Normal,
+        Player_Death
+    }
 }

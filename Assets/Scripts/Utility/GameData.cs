@@ -5,6 +5,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using static Utility;
 
+//The idea behind the game data is to load all three files at once and only use the data from the selected file to play the game. This is done by updating
+//the public versions of each variable with the corresponding GameDataFile.
+//Read method only pulls in the data from the file, initialize file is what sets up the game for play.
+
 public class GameData : MonoBehaviour
 {
     public static GameData Instance { get; set; }
@@ -114,14 +118,9 @@ public class GameData : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void InitializeGameData()
     {
-        //LoadSaveData();
-    }
-
-    public void InititalizeGameData()
-    {
-        if (MasterControl.Instance.currentFile == GameDataFile.Aplha)
+        if (MasterControl.Instance.GetCurrentGameDataFile() == GameDataFile.Aplha)
         {
             playerLocation = Alpha_PlayerLocation;
             currentPartyMemberCharacterIds = Alpha_CurrentPartyMemberCharacterIds;
@@ -133,11 +132,11 @@ public class GameData : MonoBehaviour
             playerPredictiveAlgorithms = Alpha_PlayerPredictiveAlgorithms;
 
         }
-        else if (MasterControl.Instance.currentFile == GameDataFile.Beta)
+        else if (MasterControl.Instance.GetCurrentGameDataFile() == GameDataFile.Beta)
         {
 
         }
-        else if (MasterControl.Instance.currentFile == GameDataFile.Omega)
+        else if (MasterControl.Instance.GetCurrentGameDataFile() == GameDataFile.Omega)
         {
 
         }
@@ -174,6 +173,63 @@ public class GameData : MonoBehaviour
         #endregion
     }
 
+    //Reads save data file and initializes related variables
+    private void ReadSaveData()
+    {
+        if (File.Exists(Application.persistentDataPath + "/Game_Data.sav"))
+        {
+            FileStream saveFile = File.Open(Application.persistentDataPath + "/Game_Data.sav", FileMode.Open);
+            using (saveFile)
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter();
+                SaveData saveData = (SaveData)binaryFormatter.Deserialize(saveFile);
+
+                //something = saveData.something;
+            }
+        }
+        else
+        {
+            //First Execution
+            //levelZeroGameState = GameStates.First_Execution;
+        }
+
+    }
+
+    private void WriteSaveData()
+    {
+        PrepareGameDataForWrite();
+
+        FileStream saveFile = File.Create(Application.persistentDataPath + "/Game_Data.sav");
+        using (saveFile)
+        {
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            SaveData saveData = new SaveData();
+            //saveData.something = something;
+            binaryFormatter.Serialize(saveFile, saveData);
+        }
+    }
+
+    private void PrepareGameDataForWrite ()
+    {
+        if (MasterControl.Instance.GetCurrentGameDataFile() == GameDataFile.Aplha)
+        {
+            Alpha_PlayerLocation = playerLocation;
+            Alpha_CurrentPartyMemberCharacterIds = currentPartyMemberCharacterIds;
+            Alpha_PlayerEquippedSoulParadigm = playerEquippedSoulParadigm;
+            Alpha_AquiredTreeNodes = aquiredTreeNodes;
+        }
+        else if (MasterControl.Instance.GetCurrentGameDataFile() == GameDataFile.Beta)
+        {
+
+        }
+        else if (MasterControl.Instance.GetCurrentGameDataFile() == GameDataFile.Omega)
+        {
+
+        }
+    }
+
+
+
     private void UpdatePlayerStatsAndSkills()
     {
         SoulParadigm paradigmInformation = SoulParadigmDatabase.Instance.SoulParadigms.Find(x => x.paradigm == playerEquippedSoulParadigm);
@@ -201,7 +257,7 @@ public class GameData : MonoBehaviour
         return sum;
     }
 
-    private void CompilePlayerSkillList ()
+    private void CompilePlayerSkillList()
     {
         playerSkills = new List<Skill>();
 
@@ -225,57 +281,6 @@ public class GameData : MonoBehaviour
                     }
                 }
             }
-        }
-    }
-
-    private void LoadSaveData()
-    {
-        if (File.Exists(Application.persistentDataPath + "/Game_Data.dat"))
-        {
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            FileStream saveFile = File.Open(Application.persistentDataPath + "/Game_Data.dat", FileMode.Open);
-            SaveData saveData = (SaveData)binaryFormatter.Deserialize(saveFile);
-
-            Alpha_AquiredTreeNodes = saveData.Alpha_AquiredTreeNodes;
-
-            saveFile.Close();
-        }
-        else
-        {
-            //throw some kind of error message??
-        }
-    }
-
-    private void SaveData()
-    {
-        UpdateGameData();
-
-        BinaryFormatter binaryFormatter = new BinaryFormatter();
-        FileStream saveFile = File.Create(Application.persistentDataPath + "/Game_Data.dat");
-        SaveData saveData = new SaveData();
-
-        saveData.Alpha_AquiredTreeNodes = Alpha_AquiredTreeNodes;
-
-        binaryFormatter.Serialize(saveFile, saveData);
-        saveFile.Close();
-    }
-
-    private void UpdateGameData ()
-    {
-        if (MasterControl.Instance.currentFile == GameDataFile.Aplha)
-        {
-            Alpha_PlayerLocation = playerLocation;
-            Alpha_CurrentPartyMemberCharacterIds = currentPartyMemberCharacterIds;
-            Alpha_PlayerEquippedSoulParadigm = playerEquippedSoulParadigm;
-            Alpha_AquiredTreeNodes = aquiredTreeNodes;
-        }
-        else if (MasterControl.Instance.currentFile == GameDataFile.Beta)
-        {
-
-        }
-        else if (MasterControl.Instance.currentFile == GameDataFile.Omega)
-        {
-
         }
     }
 }

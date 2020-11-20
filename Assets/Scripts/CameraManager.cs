@@ -2,21 +2,26 @@
 
 public class CameraManager : MonoBehaviour
 {
-    public GameObject digitalWorldTrigger;
+    public static CameraManager Instance;
+
+    private bool followPlayer = false;
 
     private float zDistanceFromPlayerOnMap = -30f;
     private float yDistanceFromPlayerOnMap = 19.5f;
     //private float xRotationForPlayerOnMap = 30f;
     private Transform target = null;
-    private Transform player;
-    private Transform avatar;
 
-    private void Start()
+    void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
-        avatar = GameObject.FindGameObjectWithTag("PlayerAvatar").transform;
-        target = player;
-        InputManager.worldSwitch += AdjustForSelectedWorld;
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
     private void LateUpdate()
@@ -24,35 +29,16 @@ public class CameraManager : MonoBehaviour
         AdjustPosition();
     }
 
-    private void ChangeTaget (Transform newTarget)
+    private void AdjustPosition()
     {
-        target = newTarget;
-    }
-
-    private void AdjustPosition ()
-    {
-        if (MasterControl.Instance.isInCombat)
-        {
-
-        }
-        else
+        if (followPlayer)
         {
             transform.position = new Vector3(target.position.x, target.position.y + yDistanceFromPlayerOnMap, target.position.z + zDistanceFromPlayerOnMap);
         }
     }
 
-    //Switch camera to digital world avatar and back based on the selected world
-    private void AdjustForSelectedWorld ()
+    public void ChangeTaget (Transform newTarget)
     {
-        digitalWorldTrigger.SetActive(MasterControl.Instance.isInDigitalWorld);
-
-        if (MasterControl.Instance.isInDigitalWorld)
-        {
-            target = avatar;
-        }
-        else
-        {
-            target = player;
-        }
+        target = newTarget;
     }
 }

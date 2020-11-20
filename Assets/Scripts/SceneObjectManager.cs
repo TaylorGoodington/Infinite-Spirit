@@ -19,37 +19,20 @@ public class SceneObjectManager : MonoBehaviour
         normalMaterials = meshRenderer.materials;
         canBecomeTransparent = (transparentMaterials.Length > 0 && transform.localScale.x > minWidthForTransparency) ? true : false;
         SetRendererAndColliderForWorld();
-        InputManager.worldSwitch += AdjustForDigitalWorld;
     }
 
     //Works only if the first collider on an object is its physical collider.
     private void SetRendererAndColliderForWorld()
     {
-        if (MasterControl.Instance.isInDigitalWorld)
+        if (realWorldObject)
         {
-            if (realWorldObject)
-            {
-                meshRenderer.enabled = false;
-                physicalCollider.enabled = false;
-            }
-            else
-            {
-                meshRenderer.enabled = true;
-                physicalCollider.enabled = true;
-            }
+            meshRenderer.enabled = true;
+            physicalCollider.enabled = true;
         }
         else
         {
-            if (realWorldObject)
-            {
-                meshRenderer.enabled = true;
-                physicalCollider.enabled = true;
-            }
-            else
-            {
-                meshRenderer.enabled = false;
-                physicalCollider.enabled = false;
-            }
+            meshRenderer.enabled = false;
+            physicalCollider.enabled = false;
         }
     }
 

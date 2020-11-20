@@ -1,55 +1,58 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Utility;
 
 public class InputManager : MonoBehaviour
 {
-    public delegate void WorldSwitch();
-    public static event WorldSwitch worldSwitch;
+    public static InputManager Instance;
 
-	void Start ()
+    void Awake()
     {
-		
-	}
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
 
     private void Update()
     {
-        //TODO Testing for changing worlds
-        if (Input.GetButtonDown("Start"))
+        if (MasterControl.Instance.GetCurrentInputState() == InputStates.Overworld)
         {
-            SwitchWorlds();
-        }
+            Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            ProcessPlayerInput(input);
 
-        //TODO Testing for Combat Setup
-        if (Input.GetButtonDown("Submit"))
+            //TODO Testing for Combat Setup
+            if (Input.GetButtonDown("Submit"))
+            {
+                EnterCombat();
+            }
+        }
+        else if (MasterControl.Instance.GetCurrentInputState() == InputStates.Menus)
         {
-            EnterCombat();
+
+        }
+        else if (MasterControl.Instance.GetCurrentInputState() == InputStates.Dialogue)
+        {
+
         }
     }
 
     //TODO add conditions for when playerMovementInput gets set
-    public static Vector3 ProcessInput ()
+    private void ProcessPlayerInput(Vector2 input)
     {
-        return new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        MasterControl.Instance.GetOverworldPlayer().RecieveInput(input);
     }
 
     //Test
     private void EnterCombat()
     {
         CombatController.Instance.Initialize();
-    }
-
-    private void SwitchWorlds ()
-    {
-        if (MasterControl.Instance.isInDigitalWorld == true)
-        {
-            MasterControl.Instance.isInDigitalWorld = false;
-        }
-        else
-        {
-            MasterControl.Instance.isInDigitalWorld = true;
-        }
-
-        worldSwitch();
     }
 }

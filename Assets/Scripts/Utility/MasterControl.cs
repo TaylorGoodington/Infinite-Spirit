@@ -5,10 +5,12 @@ public class MasterControl : MonoBehaviour
 {
     public static MasterControl Instance { get; set; }
 
-    public bool doesPlayerHaveControl;
-    public bool isInCombat;
-    public bool isInDigitalWorld;
-    [HideInInspector] public GameDataFile currentFile;
+    private bool doesPlayerHaveControl;
+    private bool isInCombat;
+    private bool isInDigitalWorld;
+    private GameDataFile currentFile;
+    private InputStates inputState;
+    private OverworldController overworldPlayer;
 
     private void Awake()
     {
@@ -31,7 +33,23 @@ public class MasterControl : MonoBehaviour
         isInCombat = false;
         isInDigitalWorld = false;
         currentFile = GameDataFile.Aplha;
-        GameData.Instance.InititalizeGameData();
+        GameData.Instance.InitializeGameData();
+        overworldPlayer = GameObject.FindGameObjectWithTag("Overworld_Player").GetComponent<OverworldController>();
         #endregion
+    }
+
+    public GameDataFile GetCurrentGameDataFile ()
+    {
+        return currentFile;
+    }
+
+    public InputStates GetCurrentInputState ()
+    {
+        return inputState;
+    }
+
+    public OverworldController GetOverworldPlayer ()
+    {
+        return overworldPlayer;
     }
 }
