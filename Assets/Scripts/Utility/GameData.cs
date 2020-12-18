@@ -169,7 +169,7 @@ public class GameData : MonoBehaviour
         playerKindness = 16.5f;
         playerCharisma = 16.5f;
 
-        UpdatePlayerStatsAndSkills();
+        //UpdatePlayerStatsAndSkills();
         #endregion
     }
 
@@ -230,59 +230,59 @@ public class GameData : MonoBehaviour
 
 
 
-    private void UpdatePlayerStatsAndSkills()
-    {
-        SoulParadigm paradigmInformation = SoulParadigmDatabase.Instance.SoulParadigms.Find(x => x.paradigm == playerEquippedSoulParadigm);
+    //private void UpdatePlayerStatsAndSkills()
+    //{
+    //    SoulParadigm paradigmInformation = SoulParadigmDatabase.Instance.SoulParadigms.Find(x => x.paradigm == playerEquippedSoulParadigm);
 
-        playerCoreFirewall = paradigmInformation.coreFirewall + SumOfAquiredTreeNodesByType(TreeNodeType.Core_Firewall);
-        playerCompiler = paradigmInformation.compiler + SumOfAquiredTreeNodesByType(TreeNodeType.Compiler);
-        playerDefenseMatrix = paradigmInformation.defenseMatrix + SumOfAquiredTreeNodesByType(TreeNodeType.Defense_Matrix);
-        playerPredictiveAlgorithms = paradigmInformation.predictiveAlgorithms + SumOfAquiredTreeNodesByType(TreeNodeType.Predictive_Algorithms);
+    //    playerCoreFirewall = paradigmInformation.coreFirewall + SumOfAquiredTreeNodesByType(TreeNodeType.Core_Firewall);
+    //    playerCompiler = paradigmInformation.compiler + SumOfAquiredTreeNodesByType(TreeNodeType.Compiler);
+    //    playerDefenseMatrix = paradigmInformation.defenseMatrix + SumOfAquiredTreeNodesByType(TreeNodeType.Defense_Matrix);
+    //    playerPredictiveAlgorithms = paradigmInformation.predictiveAlgorithms + SumOfAquiredTreeNodesByType(TreeNodeType.Predictive_Algorithms);
 
-        CompilePlayerSkillList();
-    }
+    //    CompilePlayerSkillList();
+    //}
 
-    //Player Only
-    private int SumOfAquiredTreeNodesByType(TreeNodeType nodeType)
-    {
-        int sum = 0;
-        foreach (var node in aquiredTreeNodes)
-        {
-            if (node.nodeType == nodeType)
-            {
-                sum += node.nodeValue;
-            }
-        }
+    ////Player Only
+    //private int SumOfAquiredTreeNodesByType(TreeNodeType nodeType)
+    //{
+    //    int sum = 0;
+    //    foreach (var node in aquiredTreeNodes)
+    //    {
+    //        if (node.nodeType == nodeType)
+    //        {
+    //            sum += node.nodeValue;
+    //        }
+    //    }
 
-        return sum;
-    }
+    //    return sum;
+    //}
 
-    private void CompilePlayerSkillList()
-    {
-        playerSkills = new List<Skill>();
+    //private void CompilePlayerSkillList()
+    //{
+    //    playerSkills = new List<Skill>();
 
-        foreach (var skill in SkillDatabase.Instance.skillDatabase)
-        {
-            //checks equipped paradigm for skills
-            if (skill.requiredParadigm == playerEquippedSoulParadigm)
-            {
-                playerSkills.Add(skill);
-            }
+    //    foreach (var skill in SkillDatabase.Instance.skillDatabase)
+    //    {
+    //        //checks equipped paradigm for skills
+    //        if (skill.requiredParadigm == playerEquippedSoulParadigm)
+    //        {
+    //            playerSkills.Add(skill);
+    //        }
 
-            //checks additional paradigm skills
-            Paradigm[] additionalParadigmSkills = SoulParadigmDatabase.Instance.SoulParadigms.Find(x => x.paradigm == playerEquippedSoulParadigm).additionalParadigmSkills;
-            if (additionalParadigmSkills != null)
-            {
-                foreach (var additionalParadigm in additionalParadigmSkills)
-                {
-                    if (skill.requiredParadigm == additionalParadigm)
-                    {
-                        playerSkills.Add(skill);
-                    }
-                }
-            }
-        }
-    }
+    //        //checks additional paradigm skills
+    //        Paradigm[] additionalParadigmSkills = SoulParadigmDatabase.Instance.SoulParadigms.Find(x => x.paradigm == playerEquippedSoulParadigm).additionalParadigmSkills;
+    //        if (additionalParadigmSkills != null)
+    //        {
+    //            foreach (var additionalParadigm in additionalParadigmSkills)
+    //            {
+    //                if (skill.requiredParadigm == additionalParadigm)
+    //                {
+    //                    playerSkills.Add(skill);
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 }
 
 [Serializable]

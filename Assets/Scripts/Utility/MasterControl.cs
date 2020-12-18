@@ -34,7 +34,8 @@ public class MasterControl : MonoBehaviour
         isInDigitalWorld = false;
         currentFile = GameDataFile.Aplha;
         GameData.Instance.InitializeGameData();
-        overworldPlayer = GameObject.FindGameObjectWithTag("Overworld_Player").GetComponent<OverworldController>();
+        overworldPlayer = GameObject.FindGameObjectWithTag("Overworld_Controller").GetComponent<OverworldController>();
+        inputState = InputStates.Overworld;
         #endregion
     }
 

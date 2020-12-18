@@ -2,23 +2,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class OverworldController : MonoBehaviour
 {
-    private Rigidbody body;
-    private Animator animator;
-    private Vector3 normalVector = new Vector3(0, 1, 0);
+    [SerializeField] float maxSpeed = 5f;
 
-    //TODO Turn private after testing is done.
-    public float stationaryTurnSpeed = 360;
-    public float movingTurnSpeed = 720;
+    NavMeshAgent nav;
+    Animator animator;
 
     void Start ()
     {
-        body = GetComponent<Rigidbody>();
-        body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
         animator = GetComponent<Animator>();
-	}
+        nav = GetComponent<NavMeshAgent>();
+        nav.speed = maxSpeed;
+    }
 
     public void RecieveInput(Vector2 input)
     {
@@ -31,12 +29,18 @@ public class OverworldController : MonoBehaviour
         
     }
 
-    private void Move(Vector3 input)
+    private void Move(Vector2 input)
     {
-        input = transform.InverseTransformDirection(input);
-        input = Vector3.ProjectOnPlane(input, normalVector);
-        float turnAmount = Mathf.Atan2(input.x, input.z);
-        float turnSpeed = Mathf.Lerp(stationaryTurnSpeed, movingTurnSpeed, input.z);
-        transform.Rotate(0, turnAmount * turnSpeed * Time.deltaTime, 0);
+        Vector3 direction = new Vector3(input.x, 0f, input.y).normalized;
+
+        if (direction.magnitude >= 0.1f)
+        {
+            animator.SetBool("isRunning", true);
+            nav.destination = transform.position + direction;
+        }
+        else
+        {
+            animator.SetBool("isRunning", false);
+        }
     }
 }
